@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Übersicht der Spiele</h3>
+                    <div class="card-options">
+                        <a href="{{ path('game_new') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Neues Spiel</a>
+                    </div>
+                </div>
+                        <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                            <thead>
+                            <tr>
+                                <th>Spiel</th>
+                                <th>Erstellt am</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for game in games %}
+                                <tr>
+                                    <td>{{ game.name }}</td>
+                                    <td>{{ game.createdAt|localizeddate('short', 'none') }}</td>
+                                    <td class="text-right">
+                                        <a href="{{ path('protocol_index', {'game': game.id}) }}"  title="Das Protokoll zum Spiel öffnen" class="btn btn-primary btn-sm"><i class="fas fa-clipboard-check"></i> Funkprotokoll</a>
+                                        <div class="item-action dropdown">
+                                            <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Aktionen</button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="{{ path('game_export', {'id': game.id}) }}" title="Die Daten zum Spiel nach Excel exportieren">
+                                                    <i class="dropdown-icon fas fa-file-excel"></i> Exportieren
+                                                </a>
+                                                {% if game.closedAt is null %}
+                                                    <a class="dropdown-item" href="{{ path('game_edit', {'id': game.id}) }}" title="Das Spiel bearbeiten">
+                                                        <i class="dropdown-icon fas fa-edit"></i> Bearbeiten
+                                                    </a>
+                                                    <a class="dropdown-item" href="{{ path('game_lock', {'id': game.id}) }}" title="Das Spiel vor Bearbeitung sperren">
+                                                        <i class="dropdown-icon fas fa-lock"></i> Sperren
+                                                    </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item text-danger" href="{{ path('game_delete', {'id': game.id}) }}" title="Das Spiel löschen">
+                                                        <i class="dropdown-icon fas fa-trash-alt"></i> Löschen
+                                                    </a>
+                                                {% else %}
+                                                    <a class="dropdown-item" href="{{ path('game_unlock', {'id': game.id}) }}" title="Das Spiel zur Bearbeitung freigeben">
+                                                        <i class="dropdown-icon fas fa-unlock"></i> Entsperren
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">Keine Spiele gefunden</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

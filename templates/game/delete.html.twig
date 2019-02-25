@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Spiel "{{ game.name }}" löschen</h1>
+    </div>
+
+    <div class="row row-cards">
+        <div class="col-12">
+            <form method="post"
+                  action="{{ path('game_delete', {'id': game.id}) }}"
+                  class="card"
+                  onsubmit="return confirm('Bist du dir sicher, dass du das Spiel löschen willst?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ game.id) }}">
+                <div class="card-body">
+                    <button class="btn btn-danger">Löschen</button>
+                    <a href="{{ path('dashboard') }}" class="btn btn-secondary">Abbrechen</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

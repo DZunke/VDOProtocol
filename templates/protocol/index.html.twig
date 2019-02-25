@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Funkprotokoll {{ game.name }} vom {{ game.createdAt|localizeddate('short', 'none') }}</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if game.closedAt is null %}
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-body position-fixed bg-white border-top" style="width: 20%">
+                            {{ form_start(form, {'action': path('protocol_index', {'game': game.id})}) }}
+                            {{ form_errors(form.content) }}
+                            <div class="form-group">{{ form_widget(form.sender, {'attr': {'tabindex': 1}}) }}</div>
+                            <div class="form-group">{{ form_widget(form.content, {'attr': {'tabindex': 2}}) }}</div>
+                            <div class="form-group">{{ form_widget(form.recipent, {'attr': {'tabindex': 3}}) }}</div>
+                            <div>
+                                <button type="submit" class="btn btn-block btn-secondary" tabindex="3">Speichern</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="{% if game.closedAt is null %}col-8{% else %}col-12{% endif %}">
+            {% for protocol in protocol_list %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card p-3 mb-1">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <small class="float-right text-muted text-right">
+                                            {{ protocol.createdAt|time_diff }} - {{ protocol.createdAt|localizeddate('none', 'short') }}
+                                            {% if game.closedAt is null %}
+                                                &nbsp;<a href="#" data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm protocol-add-child"><i class="fas fa-plus"></i></a>
+                                            {% endif %}
+                                        </small>
+                                        <h5 class="mb-0">Von <strong>{{ protocol.sender ?: '10' }}</strong> an <strong>{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</strong></h5>
+                                    </div>
+                                    <div>{{ protocol.content|nl2br }}</div>
+                                    {% if protocol.children|length > 0 %}
+                                        <ul class="media-list mt-4 ml-5">
+                                            {% for protocolChild in protocol.children %}
+                                                <li class="media mt-4">
+                                                    <div class="media-body border-left pl-3 mb-3">
+                                                        <small class="float-right text-muted">{{ protocolChild.createdAt|time_diff }} - {{ protocolChild.createdAt|localizeddate('none', 'short') }}</small>
+                                                        <strong>Von <strong>{{ protocolChild.sender ?: '10' }}</strong> an <strong>{{ protocolChild.recipent ?: (protocolChild.sender is empty ? 'alle VDO' : 'VDO 10') }}</strong></strong>
+                                                        <div>{{ protocolChild.content|nl2br }}</div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <li class="list-group-item py-5">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="alert alert-info">
+                                Keine Einträge bisher
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
