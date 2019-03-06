@@ -28,7 +28,7 @@
                                         <div class="item-action dropdown">
                                             <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Aktionen</button>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{ path('game_export', {'id': game.id}) }}" title="Die Daten zum Spiel nach Excel exportieren">
+                                                <a class="dropdown-item no-loader" href="{{ path('game_export', {'id': game.id}) }}" title="Die Daten zum Spiel nach Excel exportieren">
                                                     <i class="dropdown-icon fas fa-file-excel"></i> Exportieren
                                                 </a>
                                                 {% if game.closedAt is null %}
