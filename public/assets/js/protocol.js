@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    $('input[tabindex=1]').focus();
+
     $('textarea, input[type="text"]').keydown(function (e) {
         if (e.ctrlKey && e.keyCode == 13) { // STRG + Enter
             $(this).closest('form').submit();
@@ -10,6 +12,11 @@ $(document).ready(function() {
         }
     });
 
+    $('#focusguard').on('focus', function() {
+        console.log('FOCUSED');
+        $('input[tabindex=1]').focus();
+    });
+
     function reset() {
         $('#protocol_parent').val('');
         $('#protocol-add-child-info').remove();
@@ -17,6 +24,7 @@ $(document).ready(function() {
         $('.protocol-add-child-highlite').removeClass('protocol-add-child-highlite');
 
         $('form').find('input, textarea').val('');
+        $('input[tabindex=1]').focus();
     }
 
     $('.protocol-add-child').on('click', function(e) {
@@ -34,9 +42,9 @@ $(document).ready(function() {
         }
 
         $formElement.parent().prepend('<p id="protocol-add-child-info" class="text-center" data-append="' + $id + '"><strong>Anfügenmodus</strong></p>');
-        $formElement.parent().append('<button type="button" id="protocol-add-child-reset" class="btn btn-block btn-primary">Abbrechen</button>');
+        $formElement.parent().append('<button type="button" id="protocol-add-child-reset" class="btn btn-block btn-primary" tabindex="4">Abbrechen</button>');
 
-        $('#protocol_sender').focus();
+        $('input[tabindex=1]').focus();
 
         $('#protocol-add-child-reset').on('click', function(e) {
             e.preventDefault();
