@@ -22,7 +22,7 @@
                             {% for game in games %}
                                 <tr>
                                     <td>{{ game.name }}</td>
-                                    <td>{{ game.createdAt|localizeddate('short', 'none') }}</td>
+                                    <td>{{ game.createdAt|format_datetime('short', 'none') }}</td>
                                     <td class="text-right">
                                         <a href="{{ path('protocol_index', {'game': game.id}) }}"  title="Das Protokoll zum Spiel öffnen" class="btn btn-primary btn-sm"><i class="fas fa-clipboard-check"></i> Funkprotokoll</a>
                                         <div class="item-action dropdown">

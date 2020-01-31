@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "ext-sqlite3": "*",
         "beberlei/assert": "^3.2",
+        "knplabs/knp-time-bundle": "^1.11",
         "phpoffice/phpspreadsheet": "^1.6",
         "ramsey/uuid": "^3.8",
         "sensio/framework-extra-bundle": "^5.5",
@@ -16,27 +17,26 @@
         "symfony/expression-language": "4.4.*",
         "symfony/flex": "^1.1",
         "symfony/form": "*",
-        "symfony/framework-bundle": "4.4.*",
+        "symfony/framework-bundle": "5.0.*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
         "symfony/process": "*",
         "symfony/security-bundle": "*",
         "symfony/serializer-pack": "*",
-        "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
         "symfony/validator": "*",
         "symfony/web-link": "*",
         "symfony/webpack-encore-bundle": "^1.2",
         "symfony/yaml": "*",
-        "twig/extensions": "^1.5"
+        "twig/extra-bundle": "^3.0",
+        "twig/intl-extra": "^3.0"
     },
     "require-dev": {
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*",
-        "symfony/web-server-bundle": "*"
+        "symfony/test-pack": "*"
     },
     "config": {
         "preferred-install": {
@@ -80,7 +80,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.4.*"
+            "require": "5.0.*"
         }
     }
 }

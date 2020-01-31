@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-12">
-            <h3>Funkprotokoll {{ game.name }} vom {{ game.createdAt|localizeddate('short', 'none') }}</h3>
+            <h3>Funkprotokoll {{ game.name }} vom {{ game.createdAt|format_datetime('short', 'none') }}</h3>
         </div>
     </div>
 
@@ -45,7 +45,7 @@
                                 <div class="media-body">
                                     <div class="media-heading">
                                         <small class="float-right text-muted text-right">
-                                            {{ protocol.createdAt|time_diff }} - {{ protocol.createdAt|localizeddate('none', 'short') }}
+                                            {{ protocol.createdAt|ago }} - {{ protocol.createdAt|format_datetime('none', 'short') }}
                                             {% if game.closedAt is null %}
                                                 &nbsp;<a href="#" data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm protocol-add-child no-loader"><i class="fas fa-plus"></i></a>
                                             {% endif %}
@@ -58,7 +58,7 @@
                                             {% for protocolChild in protocol.children %}
                                                 <li class="media mt-4">
                                                     <div class="media-body border-left pl-3 mb-3">
-                                                        <small class="float-right text-muted">{{ protocolChild.createdAt|time_diff }} - {{ protocolChild.createdAt|localizeddate('none', 'short') }}</small>
+                                                        <small class="float-right text-muted">{{ protocolChild.createdAt|ago }} - {{ protocolChild.createdAt|format_datetime('none', 'short') }}</small>
                                                         <strong>Von <strong>{{ protocolChild.sender ?: '10' }}</strong> an <strong>{{ protocolChild.recipent ?: (protocolChild.sender is empty ? 'alle VDO' : 'VDO 10') }}</strong></strong>
                                                         <div>{{ protocolChild.content|nl2br }}</div>
                                                     </div>
