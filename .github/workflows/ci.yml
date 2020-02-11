@@ -1,0 +1,20 @@
+on:
+  - pull_request
+  - push
+
+name: CI
+
+jobs:
+  coding-guidelines:
+    name: Checking CodeStyle with PHPCS
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Install PHP Dependencies
+      run: |
+        sudo composer self-update
+        composer install -n --prefer-dist
+
+    - name: Checking CodeStyle with PHPCS
+      run: make check-cs
