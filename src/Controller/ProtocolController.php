@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Game;
@@ -8,6 +10,7 @@ use App\Form\ProtocolType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -19,7 +22,7 @@ class ProtocolController extends AbstractController
      * @Route("/", name="protocol_index")
      * @ParamConverter("game", class="App\Entity\Game", options={"id" = "game"})
      */
-    public function index(Request $request, Game $game)
+    public function index(Request $request, Game $game) : Response
     {
         $form = $this->createForm(ProtocolType::class, Protocol::create($game, ''));
         $form->handleRequest($request);
@@ -34,7 +37,7 @@ class ProtocolController extends AbstractController
         return $this->render('protocol/index.html.twig', [
             'game' => $game,
             'protocol_list' => $this->getDoctrine()->getRepository(Protocol::class)->findForListing($game),
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

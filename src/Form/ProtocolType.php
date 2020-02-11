@@ -14,21 +14,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function assert;
 
 final class ProtocolType extends AbstractType
 {
     /** @var EntityManagerInterface */
-    private $entityManager;
+    private $em;
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->em = $entityManager;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver) : void
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
@@ -36,18 +34,23 @@ final class ProtocolType extends AbstractType
         ]);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /** @inheritDoc */
+    public function buildForm(FormBuilderInterface $builder, array $options) : void
     {
         $builder->add('parent', HiddenType::class, ['required' => false]);
         $builder->get('parent')->addModelTransformer(new CallbackTransformer(
-            function (Protocol $protocol = null) {
+            static function (?Protocol $protocol = null) : ?string {
                 return $protocol ? $protocol->getId() : null;
             },
-            function (string $protocol = null) {
+            static function (?string $protocol = null) : ?Protocol {
                 if ($protocol === null) {
                     return null;
                 }
-                return $this->entityManager->getRepository(Protocol::class)->find($protocol);
+
+                $object = $this->em->getRepository(Protocol::class)->find($protocol);
+                assert($object === null || $object instanceof Protocol);
+
+                return $object;
             }
         ));
 
@@ -57,9 +60,7 @@ final class ProtocolType extends AbstractType
             [
                 'empty_data' => '',
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Sender',
-                ],
+                'attr' => ['placeholder' => 'Sender'],
             ]
         );
         $builder->add(
@@ -68,9 +69,7 @@ final class ProtocolType extends AbstractType
             [
                 'empty_data' => '',
                 'required' => false,
-                'attr' => [
-                    'placeholder' => 'Empfänger',
-                ],
+                'attr' => ['placeholder' => 'Empfänger'],
             ]
         );
         $builder->add(

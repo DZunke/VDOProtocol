@@ -11,17 +11,18 @@ use Doctrine\ORM\EntityRepository;
 
 class ProtocolRepository extends EntityRepository
 {
-    public function findForListing(Game $game): Collection
+    /**
+     * @return Collection&Game[]
+     */
+    public function findForListing(Game $game) : Collection
     {
         return new ArrayCollection(
             $this->findBy(
                 [
                     'parent' => null,
-                    'game' => $game
+                    'game' => $game,
                 ],
-                [
-                    'createdAt' => 'desc'
-                ]
+                ['createdAt' => 'desc']
             )
         );
     }

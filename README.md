@@ -1,7 +1,11 @@
-To be Done ... 
+[![CircleCI](https://circleci.com/gh/DZunke/VDOLog/tree/master.svg?style=svg)](https://circleci.com/gh/DZunke/VDOLog/tree/master)
 
-Run Application for Development
-===
+# VDOLog
+
+
+A simple Tool for protocol and such stuff ... Readme has to be written - it is currently more a notebook.
+
+## Run Application for Development
 
 ```
 composer install
@@ -24,9 +28,8 @@ symfony serve --no-tls
 ```
 
 
-Troubleshoot
-===
+## Troubleshoot
 
-**PHPDesktop: vcruntime140.dll is missing**
+##### PHPDesktop: vcruntime140.dll is missing
 
 Install MS C++ Redistribution https://www.microsoft.com/en-us/download/details.aspx?id=52685 

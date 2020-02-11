@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +27,7 @@ class Game
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     private $name = '';
@@ -39,42 +42,44 @@ class Game
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * @var \DateTimeInterface
+     *
+     * @var DateTimeInterface
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
-     * @var \DateTimeInterface|null
+     *
+     * @var DateTimeInterface|null
      */
     private $closedAt;
 
     public function __construct()
     {
-        $this->id = Uuid::uuid4()->toString();
-        $this->protocol = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
+        $this->id        = Uuid::uuid4()->toString();
+        $this->protocol  = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
-    public static function create(string $name): Game
+    public static function create(string $name) : Game
     {
-        $game = new self();
+        $game       = new self();
         $game->name = $name;
 
         return $game;
     }
 
-    public function getId(): string
+    public function getId() : string
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName() : string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name) : void
     {
         $this->name = $name;
     }
@@ -82,22 +87,22 @@ class Game
     /**
      * @return Protocol[]|Collection
      */
-    public function getProtocol(): Collection
+    public function getProtocol() : Collection
     {
         return new ArrayCollection($this->protocol->toArray());
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt() : DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function getClosedAt(): ?\DateTimeInterface
+    public function getClosedAt() : ?DateTimeInterface
     {
         return $this->closedAt;
     }
 
-    public function setClosedAt(?\DateTimeInterface $closedAt): void
+    public function setClosedAt(?DateTimeInterface $closedAt) : void
     {
         $this->closedAt = $closedAt;
     }
