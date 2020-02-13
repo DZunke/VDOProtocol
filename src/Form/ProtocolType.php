@@ -42,7 +42,7 @@ final class ProtocolType extends AbstractType
             static function (?Protocol $protocol = null) : ?string {
                 return $protocol ? $protocol->getId() : null;
             },
-            static function (?string $protocol = null) : ?Protocol {
+            function (?string $protocol = null) : ?Protocol {
                 if ($protocol === null) {
                     return null;
                 }
