@@ -12,3 +12,7 @@ import 'bootstrap';
 
 require('./core');
 require('./protocol');
+
+// Send Browser Push Notifications
+// import * as Notifier from './modules/push.js';
+// Notifier.sendNotification('Foo');
