@@ -33,7 +33,12 @@
         "twig/intl-extra": "^3.0"
     },
     "require-dev": {
+        "behat/behat": "^3.6",
         "doctrine/coding-standard": "^7.0",
+        "friends-of-behat/mink": "^1.7@dev",
+        "friends-of-behat/mink-browserkit-driver": "^1.4",
+        "friends-of-behat/mink-extension": "^2.4",
+        "friends-of-behat/symfony-extension": "v2.1.0-BETA.1",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

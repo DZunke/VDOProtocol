@@ -10,9 +10,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity()
+ *
+ * @UniqueEntity("name")
  */
 class Game
 {
@@ -33,7 +36,12 @@ class Game
     private $name = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Protocol", mappedBy="game", orphanRemoval=true, cascade={"ALL"}, fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Protocol",
+     *     mappedBy="game",
+     *     orphanRemoval=true,
+     *     cascade={"ALL"}, fetch="EXTRA_LAZY"
+     * )
      * @ORM\OrderBy({"createdAt" = "ASC"})
      *
      * @var Protocol[]|Collection

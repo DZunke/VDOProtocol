@@ -5,9 +5,6 @@ framework:
     serializer:
         enable_annotations: false
 
-    validation:
-        enable_annotations: false
-
     session:
         handler_id: ~
         cookie_secure: auto

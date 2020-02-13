@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Übersicht der Spiele</h3>
                     <div class="card-options">
-                        <a href="{{ path('game_new') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i> Neues Spiel</a>
+                        <a href="{{ path('game_new') }}" class="btn btn-success btn-sm" title="Neues Spiel"><i class="fas fa-plus"></i> Neues Spiel</a>
                     </div>
                 </div>
                         <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
@@ -39,7 +39,7 @@
                                                         <i class="dropdown-icon fas fa-lock"></i> Sperren
                                                     </a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item text-danger" href="{{ path('game_delete', {'id': game.id}) }}" title="Das Spiel löschen">
+                                                    <a class="dropdown-item text-danger game-delete" href="{{ path('game_delete', {'id': game.id}) }}" title="Das Spiel löschen">
                                                         <i class="dropdown-icon fas fa-trash-alt"></i> Löschen
                                                     </a>
                                                 {% else %}

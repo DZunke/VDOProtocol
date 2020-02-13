@@ -18,3 +18,23 @@ jobs:
 
     - name: Checking CodeStyle with PHPCS
       run: make check-cs
+
+  feature-tests:
+    name: Running Behat feature tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Install Yarn
+      run: |
+        curl -o- -L https://yarnpkg.com/install.sh | sudo bash
+        yarn install
+        yarn run build
+
+    - name: Install PHP Dependencies
+      run: |
+        sudo composer self-update
+        composer install -n --prefer-dist
+
+    - name: Running Behat feature tests
+      run: make feature-tests

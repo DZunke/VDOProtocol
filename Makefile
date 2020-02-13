@@ -14,4 +14,15 @@ check-cs: ## check coding standards
 fix-cs: ## auto-fix coding standards
 	vendor/bin/phpcbf -n
 
+db-create: ## creates a fresh database
+	php bin/console doctrine:database:drop --force -q
+	php bin/console doctrine:database:create -q
+	php bin/console doctrine:schema:create -q
+
+feature-tests: ## executing behat tests
+	APP_ENV=test php bin/console doctrine:database:drop --force -q
+	APP_ENV=test php bin/console doctrine:database:create -q
+	APP_ENV=test php bin/console doctrine:schema:create -q
+	APP_ENV=test vendor/bin/behat -f progress
+
 build: check-cs
