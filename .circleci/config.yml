@@ -28,6 +28,10 @@ jobs:
                     command: |
                         make check-cs
             -   run:
+                    name: Checking Static Code with PHPStan
+                    command: |
+                        make static-analysis
+            -   run:
                     name: Run Behat feature tests
                     command: |
                         make feature-tests

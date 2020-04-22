@@ -25,4 +25,7 @@ feature-tests: ## executing behat tests
 	APP_ENV=test php bin/console doctrine:schema:create -q
 	APP_ENV=test vendor/bin/behat -f progress
 
-build: check-cs
+static-analysis: ## runs static analysis
+	 vendor/bin/phpstan analyse -c phpstan.neon
+
+build: check-cs static-analysis

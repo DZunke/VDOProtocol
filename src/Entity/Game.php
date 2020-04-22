@@ -44,7 +44,7 @@ class Game
      * )
      * @ORM\OrderBy({"createdAt" = "ASC"})
      *
-     * @var Protocol[]|Collection
+     * @var Collection<int,Protocol>
      */
     private $protocol;
 
@@ -93,7 +93,7 @@ class Game
     }
 
     /**
-     * @return Protocol[]|Collection
+     * @return Collection<int,Protocol>
      */
     public function getProtocol() : Collection
     {

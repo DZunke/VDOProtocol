@@ -43,7 +43,7 @@ class Protocol
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Protocol", mappedBy="parent", orphanRemoval=true, cascade={"ALL"})
      *
-     * @var Collection&Protocol[]
+     * @var Collection<int,Protocol>
      */
     private $children;
 
@@ -112,7 +112,7 @@ class Protocol
     }
 
     /**
-     * @return Collection&Protocol[]
+     * @return Collection<int,Protocol>
      */
     public function getChildren() : Collection
     {

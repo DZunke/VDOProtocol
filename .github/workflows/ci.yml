@@ -19,6 +19,9 @@ jobs:
     - name: Checking CodeStyle with PHPCS
       run: make check-cs
 
+    - name: Checking Static Code with PHPStan
+      run: make static-analysis
+
   feature-tests:
     name: Running Behat feature tests
     runs-on: ubuntu-latest

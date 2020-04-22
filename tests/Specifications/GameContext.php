@@ -238,6 +238,10 @@ final class GameContext extends BaseContext implements Context
     public function iFollowDeleteLinkForGame(string $name) : void
     {
         $link = $this->getDeletionLinkForGame($name);
+        if ($link === null) {
+            throw new InvalidArgumentException('There is no delete link for game "' . $name . '"');
+        }
+
         $link->click();
     }
 
@@ -247,6 +251,10 @@ final class GameContext extends BaseContext implements Context
     public function iFollowBlockLinkForGame(string $name) : void
     {
         $link = $this->getBlockLinkForGame($name);
+        if ($link === null) {
+            throw new InvalidArgumentException('There is no block link for game "' . $name . '"');
+        }
+
         $link->click();
     }
 

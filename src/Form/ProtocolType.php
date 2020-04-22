@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use function assert;
 
 final class ProtocolType extends AbstractType
 {
@@ -40,17 +39,14 @@ final class ProtocolType extends AbstractType
         $builder->add('parent', HiddenType::class, ['required' => false]);
         $builder->get('parent')->addModelTransformer(new CallbackTransformer(
             static function (?Protocol $protocol = null) : ?string {
-                return $protocol ? $protocol->getId() : null;
+                return $protocol !== null ? $protocol->getId() : null;
             },
             function (?string $protocol = null) : ?Protocol {
                 if ($protocol === null) {
                     return null;
                 }
 
-                $object = $this->em->getRepository(Protocol::class)->find($protocol);
-                assert($object === null || $object instanceof Protocol);
-
-                return $object;
+                return $this->em->getRepository(Protocol::class)->find($protocol);
             }
         ));
 
