@@ -9,6 +9,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use Symfony\Component\Routing\RouterInterface;
@@ -49,6 +50,16 @@ final class GameContext extends BaseContext implements Context
      */
     public function thereIsAGameNamed(string $name) : void
     {
+        if (isset($this->games[$name])) {
+            return;
+        }
+
+        $game = $this->em->getRepository(Game::class)->findOneByName($name);
+        if ($game !== null) {
+            $this->games[$name] = $game;
+            return;
+        }
+
         $game = Game::create($name);
         $this->em->persist($game);
         $this->em->flush();
@@ -56,7 +67,18 @@ final class GameContext extends BaseContext implements Context
         $this->games[$name] = $game;
     }
 
-    private function getGame(string $name) : Game
+    /**
+     * @Given the game named :name is blocked
+     */
+    public function theGameNamedIsBlocked(string $name) : void
+    {
+        $game = $this->getGame($name);
+        $game->setClosedAt(new DateTimeImmutable());
+
+        $this->em->flush();
+    }
+
+    public function getGame(string $name) : Game
     {
         if (! array_key_exists($name, $this->games)) {
             throw new InvalidArgumentException('Game "' . $name . '" does not exist');

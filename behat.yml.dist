@@ -3,7 +3,9 @@ default:
         default:
             contexts:
                 - App\Tests\Specifications\GameContext
+                - App\Tests\Specifications\ProtocolContext
                 - Behat\MinkExtension\Context\MinkContext
+                - App\Tests\Specifications\FormContext
 
     extensions:
         FriendsOfBehat\SymfonyExtension: null

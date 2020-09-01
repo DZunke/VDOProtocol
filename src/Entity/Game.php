@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -51,14 +50,14 @@ class Game
     /**
      * @ORM\Column(type="datetime_immutable")
      *
-     * @var DateTimeInterface
+     * @var DateTimeImmutable
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      *
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable|null
      */
     private $closedAt;
 
@@ -100,17 +99,17 @@ class Game
         return new ArrayCollection($this->protocol->toArray());
     }
 
-    public function getCreatedAt() : DateTimeInterface
+    public function getCreatedAt() : DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function getClosedAt() : ?DateTimeInterface
+    public function getClosedAt() : ?DateTimeImmutable
     {
         return $this->closedAt;
     }
 
-    public function setClosedAt(?DateTimeInterface $closedAt) : void
+    public function setClosedAt(?DateTimeImmutable $closedAt) : void
     {
         $this->closedAt = $closedAt;
     }

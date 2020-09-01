@@ -1,7 +1,7 @@
 doctrine:
     dbal:
         driver: 'pdo_sqlite'
-        path: '%kernel.project_dir%/var/data/sqlite.db'
+        path: '%kernel.project_dir%/var/data/sqlite_test.db'
         charset: UTF8
     orm:
         auto_generate_proxy_classes: true

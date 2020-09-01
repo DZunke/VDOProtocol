@@ -38,7 +38,7 @@
 
         <div class="{% if game.closedAt is null %}col-8{% else %}col-12{% endif %}">
             {% for protocol in protocol_list %}
-                <div class="row">
+                <div class="row protocol-entry">
                     <div class="col-12">
                         <div class="card p-3 mb-1">
                             <div class="media">
@@ -50,11 +50,11 @@
                                                 &nbsp;<a href="#" data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm protocol-add-child no-loader"><i class="fas fa-plus"></i></a>
                                             {% endif %}
                                         </small>
-                                        <h5 class="mb-0">Von <strong>{{ protocol.sender ?: '10' }}</strong> an <strong>{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</strong></h5>
+                                        <h5 class="mb-0">Von <span class="bold protocol-sender">{{ protocol.sender ?: '10' }}</span> an <span class="bold protocol-recipent">{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</span></h5>
                                     </div>
-                                    <div>{{ protocol.content|nl2br }}</div>
+                                    <div class="protocol-content">{{ protocol.content|nl2br }}</div>
                                     {% if protocol.children|length > 0 %}
-                                        <ul class="media-list mt-4 ml-5">
+                                        <ul class="media-list mt-4 ml-5 protocol-entry-replies">
                                             {% for protocolChild in protocol.children %}
                                                 <li class="media mt-4">
                                                     <div class="media-body border-left pl-3 mb-3">
