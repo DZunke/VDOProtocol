@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/DZunke/VDOLog/tree/master.svg?style=svg)](https://circleci.com/gh/DZunke/VDOLog/tree/master)
+[![Github Workflow](https://github.com/DZunke/VDOLog/workflows/CI/badge.svg)](https://github.com/DZunke/VDOLog/actions?query=workflow%3ACI)
 
-# VDOLog
+# VDOLog****
 
 
 A simple Tool for protocol and such stuff ... Readme has to be written - it is currently more a notebook.
