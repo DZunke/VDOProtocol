@@ -5,7 +5,33 @@ OPTS=
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-serve-web:
+phpdesktop: ## build phpdesktop release
+	rm -rf build
+	wget https://github.com/cztomczak/phpdesktop/releases/download/chrome-v57.0-rc/phpdesktop-chrome-57.0-rc-php-7.1.3.zip
+	unzip phpdesktop-chrome-57.0-rc-php-7.1.3.zip
+	mv phpdesktop-chrome-57.0-rc-php-7.1.3 build
+	cd build/www; rm -rf *
+	cd build; cp php/php.ini php.ini.backup
+	cd build; rm -rf php/*
+	cd build/php; wget https://windows.php.net/downloads/releases/php-7.4.10-nts-Win32-vc15-x86.zip
+	cd build/php; unzip php-7.4.10-nts-Win32-vc15-x86.zip
+	cd build; cp php.ini.backup php/php.ini
+
+	git archive master | (cd build/www; tar x)
+	cd build/www; mv config/phpdesktop/settings.json ../
+	cd build/www; mv .env.prod .env
+	cd build/www; APP_ENV=prod composer install --optimize-autoloader --no-dev --prefer-dist --no-plugins --no-scripts --no-progress
+	cd build/www; APP_ENV=prod php bin/console cache:clear -q
+	cd build/www; APP_ENV=prod php bin/console assets:install public -q
+	cd build/www; APP_ENV=prod php bin/console doctrine:database:create -q
+	cd build/www; APP_ENV=prod php bin/console doctrine:schema:create -q
+	cd build/www; yarn install
+	cd build/www; yarn run build
+	cd build/www; rm -rf assets node_modules
+
+	cd build; zip -q -r VDOLog-PHPDesktop.zip *
+
+serve-web: ## start dev webserver
 	symfony local:server:start --no-tls
 
 check-cs: ## check coding standards

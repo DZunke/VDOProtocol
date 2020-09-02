@@ -1,0 +1,26 @@
+on:
+    push:
+        branches:
+            - master
+
+name: Build
+
+jobs:
+    phpdesktop:
+        name: build phpdesktop
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
+
+            -   name: setup yarn
+                run: |
+                    curl -o- -L https://yarnpkg.com/install.sh | sudo bash
+                    yarn install
+
+            -   name: do application build
+                run: make phpdesktop
+
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: VDOLog-PHPDesktop.zip
+                    path: build
