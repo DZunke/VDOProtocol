@@ -96,6 +96,12 @@ $(document).ready(function () {
         html: true
     });
 
+    /** Refresh Page on Click */
+    $('.btn-refresh').on('click', function(e) {
+        e.preventDefault();
+        location.reload();
+    });
+
     /** Function for remove card */
     $('[data-toggle="card-remove"]').on('click', function (e) {
         let $card = $(this).closest(DIV_CARD);
