@@ -1,43 +1,54 @@
 on:
-  - pull_request
-  - push
+    - pull_request
+    - push
 
 name: CI
 
 jobs:
-  coding-guidelines:
-    name: Checking CodeStyle with PHPCS
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
+    security-check:
+        name: checking for security issues
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
 
-    - name: Install PHP Dependencies
-      run: |
-        sudo composer self-update
-        composer install -n --prefer-dist
+            -   name: do security check
+                run: |
+                    wget https://get.sensiolabs.org/security-checker.phar
+                    php security-checker.phar security:check
 
-    - name: Checking CodeStyle with PHPCS
-      run: make check-cs
+    coding-guidelines:
+        name: check code style and static analysis
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
 
-    - name: Checking Static Code with PHPStan
-      run: make static-analysis
+            -   name: Install PHP Dependencies
+                run: |
+                    sudo composer self-update
+                    composer install -n --prefer-dist
 
-  feature-tests:
-    name: Running Behat feature tests
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
+            -   name: Checking CodeStyle with PHPCS
+                run: make check-cs
 
-    - name: Install Yarn
-      run: |
-        curl -o- -L https://yarnpkg.com/install.sh | sudo bash
-        yarn install
-        yarn run build
+            -   name: Checking Static Code with PHPStan
+                run: make static-analysis
 
-    - name: Install PHP Dependencies
-      run: |
-        sudo composer self-update
-        composer install -n --prefer-dist
+    feature-tests:
+        name: running behat feature tests
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
 
-    - name: Running Behat feature tests
-      run: make feature-tests
+            -   name: Install Yarn
+                run: |
+                    curl -o- -L https://yarnpkg.com/install.sh | sudo bash
+                    yarn install
+                    yarn run build
+
+            -   name: Install PHP Dependencies
+                run: |
+                    sudo composer self-update
+                    composer install -n --prefer-dist
+
+            -   name: Running Behat feature tests
+                run: make feature-tests
