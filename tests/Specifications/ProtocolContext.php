@@ -10,6 +10,7 @@ use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
 use Exception;
 use Symfony\Component\Routing\RouterInterface;
+
 use function assert;
 
 final class ProtocolContext extends BaseContext implements Context
@@ -29,7 +30,7 @@ final class ProtocolContext extends BaseContext implements Context
     /**
      * @BeforeScenario
      */
-    public function gatherContexts(BeforeScenarioScope $scope) : void
+    public function gatherContexts(BeforeScenarioScope $scope): void
     {
         $minkContext = $this->getContext($scope, MinkContext::class);
         assert($minkContext instanceof MinkContext);
@@ -45,7 +46,7 @@ final class ProtocolContext extends BaseContext implements Context
     /**
      * @Given I am on the protocol page of game named :gameName
      */
-    public function iAmOnTheProtocolPageOfGameNamed(string $gameName) : void
+    public function iAmOnTheProtocolPageOfGameNamed(string $gameName): void
     {
         $game = $this->gameContext->getGame($gameName);
 
@@ -55,8 +56,11 @@ final class ProtocolContext extends BaseContext implements Context
     /**
      * @Then I should see protocol parent entry from :sender to :recipent with content :content
      */
-    public function iShouldSeeProtocolParentEntryFromToWithContent(string $sender, string $recipent, string $content) : void
-    {
+    public function iShouldSeeProtocolParentEntryFromToWithContent(
+        string $sender,
+        string $recipent,
+        string $content
+    ): void {
         $protocolEntries = $this->minkContext->getSession()->getPage()->findAll('css', '.protocol-entry');
         foreach ($protocolEntries as $protocolEntry) {
             $protocolSender = $protocolEntry->find('css', '.protocol-sender');

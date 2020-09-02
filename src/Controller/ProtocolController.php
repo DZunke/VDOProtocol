@@ -22,7 +22,7 @@ class ProtocolController extends AbstractController
      * @Route("/", name="protocol_index")
      * @ParamConverter("game", class="App\Entity\Game", options={"id" = "game"})
      */
-    public function index(Request $request, Game $game) : Response
+    public function index(Request $request, Game $game): Response
     {
         $form = $this->createForm(ProtocolType::class, Protocol::create($game, ''));
         $form->handleRequest($request);

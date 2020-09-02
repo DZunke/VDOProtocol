@@ -82,7 +82,7 @@ class Protocol
         $this->createdAt = new DateTimeImmutable();
     }
 
-    public static function create(Game $game, string $content) : Protocol
+    public static function create(Game $game, string $content): Protocol
     {
         $protocol          = new self();
         $protocol->game    = $game;
@@ -91,22 +91,22 @@ class Protocol
         return $protocol;
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getGame() : Game
+    public function getGame(): Game
     {
         return $this->game;
     }
 
-    public function getParent() : ?Protocol
+    public function getParent(): ?Protocol
     {
         return $this->parent;
     }
 
-    public function setParent(?Protocol $parent) : void
+    public function setParent(?Protocol $parent): void
     {
         $this->parent = $parent;
     }
@@ -114,53 +114,53 @@ class Protocol
     /**
      * @return Collection<int,Protocol>
      */
-    public function getChildren() : Collection
+    public function getChildren(): Collection
     {
         return new ArrayCollection($this->children->toArray());
     }
 
-    public function addChild(Protocol $protocol) : void
+    public function addChild(Protocol $protocol): void
     {
         $protocol->parent = $this;
         $this->children->add($protocol);
     }
 
-    public function getContent() : string
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setContent(string $content) : void
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
 
-    public function getSender() : string
+    public function getSender(): string
     {
         return $this->sender;
     }
 
-    public function setSender(string $sender) : void
+    public function setSender(string $sender): void
     {
         $this->sender = $sender;
     }
 
-    public function getRecipent() : string
+    public function getRecipent(): string
     {
         return $this->recipent;
     }
 
-    public function setRecipent(string $recipent) : void
+    public function setRecipent(string $recipent): void
     {
         $this->recipent = $recipent;
     }
 
-    public function getCreatedAt() : DateTimeInterface
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt) : void
+    public function setCreatedAt(DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }

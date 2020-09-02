@@ -23,7 +23,7 @@ class GameController extends AbstractController
     /**
      * @Route("/new", name="game_new", methods={"GET","POST"})
      */
-    public function new(Request $request) : Response
+    public function new(Request $request): Response
     {
         $form = $this->createForm(GameType::class);
         $form->handleRequest($request);
@@ -49,7 +49,7 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/edit", name="game_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Game $game) : Response
+    public function edit(Request $request, Game $game): Response
     {
         $form = $this->createForm(GameType::class, $game);
         $form->handleRequest($request);
@@ -76,7 +76,7 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/delete", name="game_delete", methods={"GET", "DELETE"})
      */
-    public function delete(Request $request, Game $game) : Response
+    public function delete(Request $request, Game $game): Response
     {
         if ($this->isCsrfTokenValid('delete' . $game->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -97,7 +97,7 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/lock", name="game_lock", methods={"GET"})
      */
-    public function lock(Game $game) : Response
+    public function lock(Game $game): Response
     {
         $game->setClosedAt(new DateTimeImmutable());
         $this->getDoctrine()->getManager()->flush();
@@ -113,7 +113,7 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/unlock", name="game_unlock", methods={"GET"})
      */
-    public function unlock(Game $game) : Response
+    public function unlock(Game $game): Response
     {
         $game->setClosedAt(null);
         $this->getDoctrine()->getManager()->flush();
@@ -129,12 +129,12 @@ class GameController extends AbstractController
     /**
      * @Route("/{id}/export", name="game_export", methods={"GET"})
      */
-    public function export(Game $game) : StreamedResponse
+    public function export(Game $game): StreamedResponse
     {
         $spreadsheet = (new GameExporter())->export($game);
         $writer      = new Xls($spreadsheet);
 
-        $response = new StreamedResponse(static function () use ($writer) : void {
+        $response = new StreamedResponse(static function () use ($writer): void {
             $writer->save('php://output');
         });
         $response->headers->set('Content-Type', 'application/vnd.ms-excel');

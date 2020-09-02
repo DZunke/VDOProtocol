@@ -68,7 +68,7 @@ class Game
         $this->createdAt = new DateTimeImmutable();
     }
 
-    public static function create(string $name) : Game
+    public static function create(string $name): Game
     {
         $game       = new self();
         $game->name = $name;
@@ -76,17 +76,17 @@ class Game
         return $game;
     }
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name) : void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -94,22 +94,22 @@ class Game
     /**
      * @return Collection<int,Protocol>
      */
-    public function getProtocol() : Collection
+    public function getProtocol(): Collection
     {
         return new ArrayCollection($this->protocol->toArray());
     }
 
-    public function getCreatedAt() : DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function getClosedAt() : ?DateTimeImmutable
+    public function getClosedAt(): ?DateTimeImmutable
     {
         return $this->closedAt;
     }
 
-    public function setClosedAt(?DateTimeImmutable $closedAt) : void
+    public function setClosedAt(?DateTimeImmutable $closedAt): void
     {
         $this->closedAt = $closedAt;
     }

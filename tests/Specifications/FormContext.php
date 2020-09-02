@@ -8,6 +8,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
+
 use function array_keys;
 use function array_values;
 use function assert;
@@ -20,7 +21,7 @@ final class FormContext extends BaseContext implements Context
     /**
      * @BeforeScenario
      */
-    public function gatherContexts(BeforeScenarioScope $scope) : void
+    public function gatherContexts(BeforeScenarioScope $scope): void
     {
         $minkContext = $this->getContext($scope, MinkContext::class);
         assert($minkContext instanceof MinkContext);
@@ -31,7 +32,7 @@ final class FormContext extends BaseContext implements Context
     /**
      * @Then I should see form :formName
      */
-    public function iShouldSeeForm(string $formName) : void
+    public function iShouldSeeForm(string $formName): void
     {
         $this->minkContext->assertElementOnPage('form[name="' . $formName . '"]');
     }
@@ -39,7 +40,7 @@ final class FormContext extends BaseContext implements Context
     /**
      * @Then I should not see form :formName
      */
-    public function iShouldNotSeeForm(string $formName) : void
+    public function iShouldNotSeeForm(string $formName): void
     {
         $this->minkContext->assertElementNotOnPage('form[name="' . $formName . '"]');
     }
@@ -47,7 +48,7 @@ final class FormContext extends BaseContext implements Context
     /**
      * @Then I should see fields in form :formName
      */
-    public function iShouldSeeFieldsInForm(string $formName, TableNode $formElements) : void
+    public function iShouldSeeFieldsInForm(string $formName, TableNode $formElements): void
     {
         foreach ($formElements as $formElement) {
             $identifier     = array_keys($formElement)[0];

@@ -25,7 +25,7 @@ final class ProtocolType extends AbstractType
         $this->em = $entityManager;
     }
 
-    public function configureOptions(OptionsResolver $resolver) : void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
@@ -34,14 +34,14 @@ final class ProtocolType extends AbstractType
     }
 
     /** @inheritDoc */
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('parent', HiddenType::class, ['required' => false]);
         $builder->get('parent')->addModelTransformer(new CallbackTransformer(
-            static function (?Protocol $protocol = null) : ?string {
+            static function (?Protocol $protocol = null): ?string {
                 return $protocol !== null ? $protocol->getId() : null;
             },
-            function (?string $protocol = null) : ?Protocol {
+            function (?string $protocol = null): ?Protocol {
                 if ($protocol === null) {
                     return null;
                 }

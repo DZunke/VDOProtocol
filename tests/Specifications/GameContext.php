@@ -13,6 +13,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use Symfony\Component\Routing\RouterInterface;
+
 use function array_key_exists;
 use function assert;
 
@@ -37,7 +38,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @BeforeScenario
      */
-    public function gatherContexts(BeforeScenarioScope $scope) : void
+    public function gatherContexts(BeforeScenarioScope $scope): void
     {
         $minkContext = $this->getContext($scope, MinkContext::class);
         assert($minkContext instanceof MinkContext);
@@ -48,7 +49,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Given There is a game named :name
      */
-    public function thereIsAGameNamed(string $name) : void
+    public function thereIsAGameNamed(string $name): void
     {
         if (isset($this->games[$name])) {
             return;
@@ -71,7 +72,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Given the game named :name is blocked
      */
-    public function theGameNamedIsBlocked(string $name) : void
+    public function theGameNamedIsBlocked(string $name): void
     {
         $game = $this->getGame($name);
         $game->setClosedAt(new DateTimeImmutable());
@@ -79,7 +80,7 @@ final class GameContext extends BaseContext implements Context
         $this->em->flush();
     }
 
-    public function getGame(string $name) : Game
+    public function getGame(string $name): Game
     {
         if (! array_key_exists($name, $this->games)) {
             throw new InvalidArgumentException('Game "' . $name . '" does not exist');
@@ -92,7 +93,7 @@ final class GameContext extends BaseContext implements Context
      * @Given I see delete link for game :name
      * @Then  I should see delete link for game :name
      */
-    public function iSeeDeleteLinkForGame(string $name) : void
+    public function iSeeDeleteLinkForGame(string $name): void
     {
         $link = $this->getDeletionLinkForGame($name);
         if ($link === null) {
@@ -104,7 +105,7 @@ final class GameContext extends BaseContext implements Context
      * @Given I not see unblock link for game :name
      * @Then  I should not see unblock link for game :name
      */
-    public function iShouldNotSeeUnblockLinkForGame(string $name) : void
+    public function iShouldNotSeeUnblockLinkForGame(string $name): void
     {
         $link = $this->getUnblockLinkForGame($name);
         if ($link !== null) {
@@ -117,7 +118,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should not see edit link for game :name
      */
-    public function iShouldNotSeeEditLinkForGame(string $name) : void
+    public function iShouldNotSeeEditLinkForGame(string $name): void
     {
         $link = $this->getEditLinkForGame($name);
         if ($link !== null) {
@@ -130,7 +131,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should not see block link for game :name
      */
-    public function iShouldNotSeeBlockLinkForGame(string $name) : void
+    public function iShouldNotSeeBlockLinkForGame(string $name): void
     {
         $link = $this->getBlockLinkForGame($name);
         if ($link !== null) {
@@ -143,7 +144,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should see radio link for game :name
      */
-    public function iSeeRadioLinkForGame(string $name) : void
+    public function iSeeRadioLinkForGame(string $name): void
     {
         $link = $this->getRadioLinkForGame($name);
         if ($link === null) {
@@ -151,7 +152,7 @@ final class GameContext extends BaseContext implements Context
         }
     }
 
-    private function getDeletionLinkForGame(string $name) : ?NodeElement
+    private function getDeletionLinkForGame(string $name): ?NodeElement
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('game_delete', ['id' => $game->getId()]);
@@ -159,7 +160,7 @@ final class GameContext extends BaseContext implements Context
         return $this->getLinkWithUrl('Das Spiel löschen', $url);
     }
 
-    private function getRadioLinkForGame(string $name) : ?NodeElement
+    private function getRadioLinkForGame(string $name): ?NodeElement
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('protocol_index', ['game' => $game->getId()]);
@@ -167,7 +168,7 @@ final class GameContext extends BaseContext implements Context
         return $this->getLinkWithUrl('Das Protokoll zum Spiel öffnen', $url);
     }
 
-    private function getExportLinkForGame(string $name) : ?NodeElement
+    private function getExportLinkForGame(string $name): ?NodeElement
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('game_export', ['id' => $game->getId()]);
@@ -178,7 +179,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should see export link for game :name
      */
-    public function iShouldSeeExportLinkForGame(string $name) : void
+    public function iShouldSeeExportLinkForGame(string $name): void
     {
         $link = $this->getExportLinkForGame($name);
         if ($link === null) {
@@ -186,7 +187,7 @@ final class GameContext extends BaseContext implements Context
         }
     }
 
-    private function getEditLinkForGame(string $name) : ?NodeElement
+    private function getEditLinkForGame(string $name): ?NodeElement
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('game_edit', ['id' => $game->getId()]);
@@ -197,7 +198,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should see edit link for game :name
      */
-    public function iShouldSeeEditLinkForGame(string $name) : void
+    public function iShouldSeeEditLinkForGame(string $name): void
     {
         $link = $this->getEditLinkForGame($name);
         if ($link === null) {
@@ -208,7 +209,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should see block link for game :name
      */
-    public function iShouldSeeBlockLinkForGame(string $name) : void
+    public function iShouldSeeBlockLinkForGame(string $name): void
     {
         $link = $this->getBlockLinkForGame($name);
         if ($link === null) {
@@ -216,7 +217,7 @@ final class GameContext extends BaseContext implements Context
         }
     }
 
-    private function getBlockLinkForGame(string $name) : ?NodeElement
+    private function getBlockLinkForGame(string $name): ?NodeElement
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('game_lock', ['id' => $game->getId()]);
@@ -224,7 +225,7 @@ final class GameContext extends BaseContext implements Context
         return $this->getLinkWithUrl('Das Spiel vor Bearbeitung sperren', $url);
     }
 
-    private function getLinkWithUrl(string $content, string $url) : ?NodeElement
+    private function getLinkWithUrl(string $content, string $url): ?NodeElement
     {
         $allLinks = $this->minkContext->getSession()->getPage()->findAll('named', ['link', $content]);
         foreach ($allLinks as $link) {
@@ -239,7 +240,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should see unblock link for game :name
      */
-    public function iShouldSeeUnblockLinkForGame(string $name) : void
+    public function iShouldSeeUnblockLinkForGame(string $name): void
     {
         $link = $this->getUnblockLinkForGame($name);
         if ($link === null) {
@@ -247,7 +248,7 @@ final class GameContext extends BaseContext implements Context
         }
     }
 
-    private function getUnblockLinkForGame(string $name) : ?NodeElement
+    private function getUnblockLinkForGame(string $name): ?NodeElement
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('game_unlock', ['id' => $game->getId()]);
@@ -258,7 +259,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @When I follow delete link for game :name
      */
-    public function iFollowDeleteLinkForGame(string $name) : void
+    public function iFollowDeleteLinkForGame(string $name): void
     {
         $link = $this->getDeletionLinkForGame($name);
         if ($link === null) {
@@ -271,7 +272,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @When I follow block link for game :name
      */
-    public function iFollowBlockLinkForGame(string $name) : void
+    public function iFollowBlockLinkForGame(string $name): void
     {
         $link = $this->getBlockLinkForGame($name);
         if ($link === null) {
@@ -284,7 +285,7 @@ final class GameContext extends BaseContext implements Context
     /**
      * @Then I should be on delete confirmation page for game :name
      */
-    public function iShouldBeOnDeleteConfirmationPageForGame(string $name) : void
+    public function iShouldBeOnDeleteConfirmationPageForGame(string $name): void
     {
         $game = $this->getGame($name);
         $url  = $this->router->generate('game_delete', ['id' => $game->getId()]);

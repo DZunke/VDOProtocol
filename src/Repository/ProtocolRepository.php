@@ -18,7 +18,7 @@ class ProtocolRepository extends EntityRepository
     /**
      * @return Collection<int,Protocol>
      */
-    public function findForListing(Game $game) : Collection
+    public function findForListing(Game $game): Collection
     {
         return new ArrayCollection(
             $this->findBy(

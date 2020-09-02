@@ -6,11 +6,12 @@ namespace App\Model;
 
 use App\Entity\Game;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 use function strlen;
 
 class GameExporter
 {
-    public function export(Game $game) : Spreadsheet
+    public function export(Game $game): Spreadsheet
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->removeSheetByIndex(0);
@@ -20,7 +21,7 @@ class GameExporter
         return $spreadsheet;
     }
 
-    private function appendProtocol(Spreadsheet $spreadsheet, Game $game) : void
+    private function appendProtocol(Spreadsheet $spreadsheet, Game $game): void
     {
         $data   = [];
         $data[] = ['Sender', 'Empfänger', 'Uhrzeit', 'Inhalt'];
