@@ -22,15 +22,18 @@ jobs:
         steps:
             -   uses: actions/checkout@master
 
-            -   name: Install PHP Dependencies
+            -   name: linting php files
+                run: make lint-php
+
+            -   name: install php dependencies
                 run: |
                     sudo composer self-update
                     composer install -n --prefer-dist
 
-            -   name: Checking CodeStyle with PHPCS
+            -   name: checking code style
                 run: make check-cs
 
-            -   name: Checking Static Code with PHPStan
+            -   name: doing static analyses with phpstan
                 run: make static-analysis
 
     feature-tests:
@@ -39,16 +42,16 @@ jobs:
         steps:
             -   uses: actions/checkout@master
 
-            -   name: Install Yarn
+            -   name: setup yarn for frontend assets
                 run: |
                     curl -o- -L https://yarnpkg.com/install.sh | sudo bash
                     yarn install
                     yarn run build
 
-            -   name: Install PHP Dependencies
+            -   name: install php dependencies
                 run: |
                     sudo composer self-update
                     composer install -n --prefer-dist
 
-            -   name: Running Behat feature tests
+            -   name: running behat tests
                 run: make feature-tests
