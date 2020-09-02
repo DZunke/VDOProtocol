@@ -13,3 +13,5 @@ parameters:
         container_xml_path: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
     doctrine:
         objectManagerLoader: tests/object-manager.php
+
+    checkMissingIterableValueType: false

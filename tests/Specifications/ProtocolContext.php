@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Specifications;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
-use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\VarDumper\VarDumper;
+use function assert;
 
 final class ProtocolContext extends BaseContext implements Context
 {
-    /** @var EntityManagerInterface */
-    private $em;
     /** @var RouterInterface */
     private $router;
     /** @var MinkContext */
@@ -21,9 +21,8 @@ final class ProtocolContext extends BaseContext implements Context
     /** @var GameContext */
     private $gameContext;
 
-    public function __construct(EntityManagerInterface $em, RouterInterface $router)
+    public function __construct(RouterInterface $router)
     {
-        $this->em     = $em;
         $this->router = $router;
     }
 
@@ -38,7 +37,7 @@ final class ProtocolContext extends BaseContext implements Context
         $this->minkContext = $minkContext;
 
         $gameContext = $this->getContext($scope, GameContext::class);
-        assert($gameContext instanceof MinkContext);
+        assert($gameContext instanceof GameContext);
 
         $this->gameContext = $gameContext;
     }
@@ -60,9 +59,20 @@ final class ProtocolContext extends BaseContext implements Context
     {
         $protocolEntries = $this->minkContext->getSession()->getPage()->findAll('css', '.protocol-entry');
         foreach ($protocolEntries as $protocolEntry) {
-            $protocolSender   = $protocolEntry->find('css', '.protocol-sender')->getText();
-            $protocolRecipent = $protocolEntry->find('css', '.protocol-recipent')->getText();
-            $protocolContent  = $protocolEntry->find('css', '.protocol-content')->getText();
+            $protocolSender = $protocolEntry->find('css', '.protocol-sender');
+            if ($protocolSender instanceof NodeElement) {
+                $protocolSender = $protocolSender->getText();
+            }
+
+            $protocolRecipent = $protocolEntry->find('css', '.protocol-recipent');
+            if ($protocolRecipent instanceof NodeElement) {
+                $protocolRecipent = $protocolRecipent->getText();
+            }
+
+            $protocolContent = $protocolEntry->find('css', '.protocol-content');
+            if ($protocolContent instanceof NodeElement) {
+                $protocolContent = $protocolContent->getText();
+            }
 
             if ($protocolSender === $sender && $protocolRecipent === $recipent && $protocolContent === $content) {
                 return;
@@ -73,5 +83,4 @@ final class ProtocolContext extends BaseContext implements Context
             'Missing protocol message from "' . $sender . '" to "' . $recipent . '" with content "' . $content . '"'
         );
     }
-
 }
