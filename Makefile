@@ -54,6 +54,9 @@ feature-tests: ## executing behat tests
 static-analysis: ## runs static analysis
 	 vendor/bin/phpstan analyse -c phpstan.neon
 
+phpunit: ## run phpunit
+	 vendor/bin/phpunit
+
 lint-php: ## linting php files
 	 if find src -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi
 	 if find tests -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi

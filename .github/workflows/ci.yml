@@ -55,3 +55,17 @@ jobs:
 
             -   name: running behat tests
                 run: make feature-tests
+
+    unit-tests:
+        name: running unit tests
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
+
+            -   name: install php dependencies
+                run: |
+                    sudo composer self-update
+                    composer install -n --prefer-dist
+
+            -   name: running unit tests
+                run: make phpunit

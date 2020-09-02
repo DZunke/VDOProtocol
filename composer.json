@@ -11,7 +11,9 @@
         "phpoffice/phpspreadsheet": "^1.6",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "*",
+        "symfony/browser-kit": "5.1.*",
         "symfony/console": "*",
+        "symfony/css-selector": "5.1.*",
         "symfony/dotenv": "*",
         "symfony/expression-language": "*",
         "symfony/flex": "^1.1",
@@ -34,7 +36,7 @@
     "require-dev": {
         "behat/behat": "^3.6",
         "doctrine/coding-standard": "^8.1",
-        "friends-of-behat/mink": "^1.7@dev",
+        "friends-of-behat/mink": "^1.8",
         "friends-of-behat/mink-browserkit-driver": "^1.4",
         "friends-of-behat/mink-extension": "^2.4",
         "friends-of-behat/symfony-extension": "^2.1",
@@ -42,11 +44,12 @@
         "phpstan/phpstan-doctrine": "^0.12.10",
         "phpstan/phpstan-strict-rules": "^0.12.2",
         "phpstan/phpstan-symfony": "^0.12.6",
+        "phpunit/phpunit": "^9.3",
         "ramsey/uuid": "^4.1",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "symfony/phpunit-bridge": "^5.1",
+        "symfony/profiler-pack": "*"
     },
     "config": {
         "preferred-install": {

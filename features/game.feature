@@ -29,6 +29,12 @@ Feature:
         And I should see "FooGame" in the "table" element
         And I should see "Das Spiel mit dem Namen \"FooGame\" wurde erfolgreich gespeichert."
         
+    Scenario: A game could not be created with empty name
+        And I am on "/game/new"
+        And I press "Speichern"
+        Then I should be on "/game/new"
+        And I should see "Dieser Wert sollte nicht leer sein."
+
     Scenario: A game could only be created once
         Given There is a game named "UniqueGameName"
         And I am on "/game/new"
