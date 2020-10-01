@@ -11,13 +11,12 @@ phpdesktop: ## build phpdesktop release
 	unzip phpdesktop-chrome-57.0-rc-php-7.1.3.zip
 	mv phpdesktop-chrome-57.0-rc-php-7.1.3 build
 	cd build/www; rm -rf *
-	cd build; cp php/php.ini php.ini.backup
 	cd build; rm -rf php/*
 	cd build/php; wget https://windows.php.net/downloads/releases/php-7.4.11-nts-Win32-vc15-x86.zip
 	cd build/php; unzip php-7.4.11-nts-Win32-vc15-x86.zip
-	cd build; cp php.ini.backup php/php.ini
 
 	git archive master | (cd build/www; tar x)
+	cd build/www; mv config/phpdesktop/php.ini ../php
 	cd build/www; mv config/phpdesktop/settings.json ../
 	cd build/www; mv .env.prod .env
 	cd build/www; APP_ENV=prod composer install --optimize-autoloader --no-dev --prefer-dist --no-plugins --no-scripts --no-progress
