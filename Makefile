@@ -12,8 +12,8 @@ phpdesktop: ## build phpdesktop release
 	mv phpdesktop-chrome-57.0-rc-php-7.1.3 build
 	cd build/www; rm -rf *
 	cd build; rm -rf php/*
-	cd build/php; wget https://windows.php.net/downloads/releases/php-7.4.11-nts-Win32-vc15-x86.zip
-	cd build/php; unzip php-7.4.11-nts-Win32-vc15-x86.zip
+	cd build/php; wget https://windows.php.net/downloads/releases/latest/php-7.4-nts-Win32-vc15-x86-latest.zip
+	cd build/php; unzip php-7.4-nts-Win32-vc15-x86-latest.zip
 
 	git archive master | (cd build/www; tar x)
 	cd build/www; mv config/phpdesktop/php.ini ../php
@@ -60,4 +60,4 @@ lint-php: ## linting php files
 	 if find src -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi
 	 if find tests -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected"; then exit 1; fi
 
-build: lint-php check-cs static-analysis
+build: lint-php check-cs static-analysis phpunit feature-tests
