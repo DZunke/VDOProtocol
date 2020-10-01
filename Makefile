@@ -13,8 +13,8 @@ phpdesktop: ## build phpdesktop release
 	cd build/www; rm -rf *
 	cd build; cp php/php.ini php.ini.backup
 	cd build; rm -rf php/*
-	cd build/php; wget https://windows.php.net/downloads/releases/php-7.4.10-nts-Win32-vc15-x86.zip
-	cd build/php; unzip php-7.4.10-nts-Win32-vc15-x86.zip
+	cd build/php; wget https://windows.php.net/downloads/releases/php-7.4.11-nts-Win32-vc15-x86.zip
+	cd build/php; unzip php-7.4.11-nts-Win32-vc15-x86.zip
 	cd build; cp php.ini.backup php/php.ini
 
 	git archive master | (cd build/www; tar x)
