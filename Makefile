@@ -28,8 +28,6 @@ phpdesktop: ## build phpdesktop release
 	cd build/www; yarn run build
 	cd build/www; rm -rf assets node_modules
 
-	cd build; zip -q -r VDOLog-PHPDesktop.zip *
-
 serve-web: ## start dev webserver
 	symfony local:server:start --no-tls
 

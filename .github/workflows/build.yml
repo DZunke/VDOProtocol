@@ -22,5 +22,5 @@ jobs:
 
             -   uses: actions/upload-artifact@v2
                 with:
-                    name: VDOLog-PHPDesktop.zip
+                    name: VDOLog-PHPDesktop
                     path: build
