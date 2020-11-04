@@ -15,6 +15,7 @@ Encore
     .enableVersioning(Encore.isProduction())
 
     .enableSassLoader()
+    .enableVueLoader()
 ;
 
 module.exports = Encore.getWebpackConfig();

@@ -21,14 +21,14 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
-<body class="">
-<div class="page">
+<body>
+<div class="page" id="app">
     <div class="page-main">
         <div class="header d-lg-flex p-0">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-3 ml-auto text-right">
-                        <a type="button" class="btn btn-icon btn-primary btn-secondary btn-refresh" title="Aktuelle Seite aktualisieren"><i class="fas fa-sync"></i></a>
+                        <refresh-button></refresh-button>
                     </div>
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
@@ -76,6 +76,7 @@
             </div>
         </div>
     </footer>
+    <loader></loader>
 </div>
 
 {% block javascripts %}
