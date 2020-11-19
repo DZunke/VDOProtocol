@@ -4,6 +4,10 @@ require('../css/app.scss');
 require('../css/fontawesome.min.css');
 require('../css/brands.min.css');
 require('../css/solid.css');
+require('bootstrap');
+
+const $ = require('jquery');
+global.$ = global.jQuery = $;
 
 import Vue from 'vue'
 import Loader from './Components/Loader';
