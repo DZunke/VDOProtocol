@@ -16,6 +16,10 @@ export default {
   mounted: function () {
     let vue = this;
 
+    window.onbeforeunload = function () {
+      vue.check();
+    };
+
     document.querySelectorAll('a, form, button[type="submit"]').forEach(function (elem) {
       elem.addEventListener('click', ($event) => {
         if (elem !== $event.target) return;
@@ -28,7 +32,6 @@ export default {
         vue.check();
       }
     });
-
   },
   methods: {
     check($element) {

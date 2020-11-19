@@ -13,7 +13,8 @@ import Protocol from './Components/Protocol';
 Vue.use(Loader);
 Vue.use(RefreshButton);
 Vue.use(Protocol);
-new Vue({
+
+let app = new Vue({
     el: "#app",
     components: {
         'loader': Loader,
@@ -21,3 +22,5 @@ new Vue({
         'protocol': Protocol
     },
 });
+
+window.app = app;
