@@ -12,9 +12,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="/{{ app_config.favIcon }}" type="image/x-icon"/>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <title>{% block title %}Hertha BSC Protokoll VDO-Edition{% endblock %}</title>
+    <title>{% block title %}{{ app_config.title }}{% endblock %}</title>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -70,8 +70,8 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-                    <img src="/images/hertha_96x96.png" class="header-brand-img" alt="Hertha BSC Logo">
-                    Hertha BSC Protokoll VDO-Edition - Made with <span class="text-red">❤</span> in Nikolassee
+                    <img src="{{ app_config.footerImage }}" class="header-brand-img" alt="{{ app_config.footerImageTitle }}">
+                    {{ app_config.title }} - Made by <a href="https://github.com/DZunke" title="Denis Zunke Github Profile">Denis Zunke</a> with <span class="text-red">❤</span> in Nikolassee
                 </div>
             </div>
         </div>

@@ -6,10 +6,18 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        Twig\Extension\ExtensionInterface:
+            tags: [ 'twig.extension' ]
+
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Entity,Model,Kernel.php}'
 
     App\Controller\:
         resource: '../src/Controller'
-        tags: ['controller.service_arguments']
+        tags: [ 'controller.service_arguments' ]
+
+    App\Model\ApplicationConfiguration:
+        arguments:
+            - ['%kernel.project_dir%/config/phpdesktop/settings.json', '%kernel.project_dir%/../settings.json']
