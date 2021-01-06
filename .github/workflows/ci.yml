@@ -1,73 +1,54 @@
+name: CI
 on:
     pull_request: ~
     push:
         branches:
             - master
-
-name: CI
-
 jobs:
-    security-check:
-        name: checking for security issues
+    ci:
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php: [ '7.4' ]
+                # Excluded cause experimental is not the same as allow failure
+                # @see https://github.com/actions/toolkit/issues/399
+                # include:
+                #    -   php: '8.0'
+                #        composer-options: "--ignore-platform-reqs"
+                #        experimental: true
+
+        name: PHP ${{ matrix.php }}
+
         steps:
-            -   uses: actions/checkout@master
+            -   name: Checkout
+                uses: actions/checkout@v2
 
-            -   name: do security check
-                run: |
-                    wget https://get.sensiolabs.org/security-checker.phar
-                    php security-checker.phar security:check
+            -   uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
 
-    coding-guidelines:
-        name: check code style and static analysis
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@master
+            -   uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: ${{ matrix.composer-options }}
 
-            -   name: linting php files
+            - name: setup yarn for frontend assets
+              run: |
+                curl -o- -L https://yarnpkg.com/install.sh | sudo bash
+                yarn install
+                yarn run build
+
+            -   name: Linting PHP
                 run: make lint-php
 
-            -   name: install php dependencies
-                run: |
-                    sudo composer self-update
-                    composer install -n --prefer-dist
-
-            -   name: checking code style
+            -   name: PHPCS Code Style Check
                 run: make check-cs
 
-            -   name: doing static analyses with phpstan
+            -   name: PHPStan Static Analyses
                 run: make static-analysis
 
-    feature-tests:
-        name: running behat feature tests
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@master
-
-            -   name: setup yarn for frontend assets
-                run: |
-                    curl -o- -L https://yarnpkg.com/install.sh | sudo bash
-                    yarn install
-                    yarn run build
-
-            -   name: install php dependencies
-                run: |
-                    sudo composer self-update
-                    composer install -n --prefer-dist
-
-            -   name: running behat tests
-                run: make feature-tests
-
-    unit-tests:
-        name: running unit tests
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@master
-
-            -   name: install php dependencies
-                run: |
-                    sudo composer self-update
-                    composer install -n --prefer-dist
-
-            -   name: running unit tests
+            -   name: Unit Tests
                 run: make phpunit
+
+            -   name: Behat Feature Tests
+                run: make feature-test
