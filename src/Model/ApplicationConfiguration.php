@@ -7,7 +7,6 @@ namespace App\Model;
 use Assert\Assertion;
 
 use function assert;
-use function count;
 use function end;
 use function explode;
 use function file_exists;
@@ -57,11 +56,7 @@ class ApplicationConfiguration
         $this->footerImage      = $array['main_window']['footer_image'];
         $this->footerImageTitle = $array['main_window']['footer_image_title'];
 
-        $favIconParts = explode('/', $array['main_window']['icon']);
-        if (count($favIconParts) === 0) {
-            return;
-        }
-
+        $favIconParts  = explode('/', $array['main_window']['icon']);
         $this->favIcon = end($favIconParts);
     }
 
