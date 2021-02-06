@@ -1,13 +1,4 @@
 {
-    "devDependencies": {
-        "@symfony/webpack-encore": "^0.33.0",
-        "bootstrap": "^4.3.1",
-        "node-sass": "^4.11.0",
-        "tabler-ui": "^0.0.32",
-        "vue": "^2.6.12",
-        "vue-loader": "^15.0.11",
-        "vue-template-compiler": "^2.6.12"
-    },
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
@@ -17,9 +8,15 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@symfony/webpack-encore": "^1.0.0",
+        "bootstrap": "^4.6.0",
         "jquery": "^3.5.1",
-        "node-forge": "^0.10.0",
-        "popper.js": "^1.14.7",
-        "sass-loader": "^10.0.0"
+        "popper.js": "^1.16.1",
+        "sass": "^1.32.6",
+        "sass-loader": "^10.0.0",
+        "tabler-ui": "^0.0.32",
+        "vue": "^2.6.12",
+        "vue-loader": "^15",
+        "vue-template-compiler": "^2.6.12"
     }
 }

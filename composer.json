@@ -10,7 +10,7 @@
         "beberlei/assert": "^3.2",
         "knplabs/knp-time-bundle": "^1.11",
         "phpoffice/phpspreadsheet": "^1.6",
-        "sensio/framework-extra-bundle": "^5.5",
+        "sensio/framework-extra-bundle": "^6.0",
         "symfony/asset": "*",
         "symfony/browser-kit": "5.2.*",
         "symfony/console": "*",
