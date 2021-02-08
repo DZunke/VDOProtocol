@@ -10,7 +10,7 @@ export default class extends Controller {
             that.check();
         };
 
-        document.querySelectorAll('a, form, button[type="submit"]').forEach(function (elem) {
+        document.querySelectorAll('a, button[type="submit"]').forEach(function (elem) {
             elem.addEventListener('click', ($event) => {
                 if (elem !== $event.target) return;
                 that.check($event.currentTarget);
