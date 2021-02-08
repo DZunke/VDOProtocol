@@ -9,17 +9,3 @@ import './bootstrap';
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
-
-import Vue from 'vue'
-import Protocol from './vue-components/Protocol';
-
-Vue.use(Protocol);
-
-let app = new Vue({
-    el: "#app",
-    components: {
-        'protocol': Protocol
-    },
-});
-
-window.app = app;

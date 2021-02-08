@@ -7,8 +7,7 @@
             <h3>Funkprotokoll {{ game.name }} vom {{ game.createdAt|format_datetime('short', 'none') }}</h3>
         </div>
     </div>
-    <protocol ref="Protocol" submit-form-query="form[name='protocol']">
-    <div class="row">
+    <div class="row" data-controller="protocol" data-protocol-form-query="form[name='protocol']">
         {% if game.closedAt is null %}
             <div class="col-4">
                 <div class="card-body position-fixed bg-white border-top protocol-form" style="width: 15%; min-width: 380px;">
@@ -16,9 +15,9 @@
 
                     {{ form_start(form, {'action': path('protocol_index', {'game': game.id})}) }}
                     {{ form_errors(form.content) }}
-                    <div class="form-group">{{ form_widget(form.sender, {'attr': {'tabindex': 1, '@keydown.ctrl.67': "$refs.Protocol.reset();", '@keydown.ctrl.13': "$refs.Protocol.submit();"}}) }}</div>
-                    <div class="form-group">{{ form_widget(form.content, {'attr': {'tabindex': 2, '@keydown.ctrl.67': "$refs.Protocol.reset();", '@keydown.ctrl.13': "$refs.Protocol.submit();"}}) }}</div>
-                    <div class="form-group">{{ form_widget(form.recipent, {'attr': {'tabindex': 3, '@keydown.ctrl.67': "$refs.Protocol.reset();", '@keydown.ctrl.13': "$refs.Protocol.submit();"}}) }}</div>
+                    <div class="form-group">{{ form_widget(form.sender, {'attr': {'tabindex': 1}}) }}</div>
+                    <div class="form-group">{{ form_widget(form.content, {'attr': {'tabindex': 2}}) }}</div>
+                    <div class="form-group">{{ form_widget(form.recipent, {'attr': {'tabindex': 3}}) }}</div>
                     <div>
                         <button type="submit" class="btn btn-block btn-secondary" tabindex="3" data-check-form="protocol">Speichern</button>
                     </div>
@@ -27,7 +26,7 @@
                         <strong>STRG + C</strong>: Abbrechen einer Eingabe<br />
                         <strong>STRG + Return</strong>: Absenden des Formulars
                     </p>
-                    <span id="focusguard" tabindex="5" @focus="$refs.Protocol.focusguard();"></span>
+                    <span id="focusguard" tabindex="5" data-action="focus->protocol#focusguard"></span>
                 </div>
             </div>
         {% endif %}
@@ -43,10 +42,10 @@
                                         <small class="float-right text-muted text-right">
                                             {{ protocol.createdAt|ago }} - {{ protocol.createdAt|format_datetime('none', 'short') }}
                                             {% if game.closedAt is null %}
-                                                &nbsp;<a href="#" data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm no-loader" @click="$refs.Protocol.addChildEntry($event.currentTarget);"><i class="fas fa-plus"></i></a>
+                                                &nbsp;<a href="#" data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm no-loader" data-action="protocol#addChildEntry"><i class="fas fa-plus"></i></a>
                                             {% endif %}
                                         </small>
-                                        <h5 class="mb-0">Von <span class="bold protocol-sender">{{ protocol.sender ?: '10' }}</span> an <span class="bold protocol-recipent">{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</span></h5>
+                                        <h5 class="mb-0">Von <span class="bold protocol-sender">{{ protocol.sender ?: '10' }}</span> an <span class=  "bold protocol-recipent">{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</span></h5>
                                     </div>
                                     <div class="protocol-content">{{ protocol.content|nl2br }}</div>
                                     {% if protocol.children|length > 0 %}
