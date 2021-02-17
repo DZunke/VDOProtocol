@@ -35,20 +35,32 @@ export default class extends Controller {
             this.canvas.renderAll.bind(this.canvas)
         );
 
-        document.getElementById('serialize').addEventListener('click', function() {
+        document.getElementById('serialize').addEventListener('click', function () {
             // To ensure custom properties will be saved give them to "toJSON"-Method
             // that.canvas.toJSON(["vdo_groups"])
 
             document.getElementById('content').textContent = JSON.stringify(that.canvas.toJSON(["vdo_groups"]));
         });
 
+        document.addEventListener("keyup", function (e) {
+            if (e.code !== "Delete") {
+                return;
+            }
+
+            that.canvas.getActiveObjects().forEach((obj) => {
+                that.canvas.remove(obj)
+            });
+            that.canvas.discardActiveObject().renderAll()
+        });
+
+
         document.getElementById('poly').addEventListener('click', function () {
             console.log(that.drawingObject);
 
             if (that.drawingObject.type === "roof") {
                 that.drawingObject.type = "";
-                that.lines.forEach(function(value, index, ar){
-                     that.canvas.remove(value);
+                that.lines.forEach(function (value, index, ar) {
+                    that.canvas.remove(value);
                 });
                 that.roof = that.makeRoof(that.roofPoints);
                 that.canvas.add(that.roof);
