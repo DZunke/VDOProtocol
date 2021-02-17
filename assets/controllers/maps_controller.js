@@ -53,6 +53,32 @@ export default class extends Controller {
             that.canvas.discardActiveObject().renderAll()
         });
 
+        this.canvas.on('mouse:over', function (e) {
+            if (e.target === null || e.target.type !== 'polyline') {
+                return;
+            }
+
+            console.log(e.target.get('vdo_groups'));
+
+            let $tooltip = document.getElementById('canvas-tooltip');
+
+            $tooltip.innerHTML = e.target.get('vdo_groups').join(', ');
+            $tooltip.style.visibility = 'visible'
+            $tooltip.style.top = e.e.offsetY + 'px'
+            $tooltip.style.left = e.e.offsetX + 'px'
+        });
+
+        this.canvas.on('mouse:out', function (e) {
+            if (e.target === null || e.target.type !== 'polyline') {
+                return;
+            }
+
+            console.log(e.target.get('vdo_groups'));
+
+            let $tooltip = document.getElementById('canvas-tooltip');
+            $tooltip.style.visibility = 'hidden'
+        });
+
 
         document.getElementById('poly').addEventListener('click', function () {
             console.log(that.drawingObject);
