@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Konfiguration für Übersichtskarten</h3>
+        </div>
+    </div>
+
+    <div class="row" data-controller="maps" data-maps-maps-field="canvas-tools">
+        <div class="col-12">
+            <button id="poly" title="Draw Polygon">Draw Polygon</button>
+            <button id="serialize" title="Serialisiere">Serialisiere</button>
+
+            <pre id="content"></pre>
+            <canvas id="canvas-tools" class="canvas" width="1000" height="1000" style="border: 1px solid black;"></canvas>
+        </div>
+    </div>
+
+{% endblock %}
