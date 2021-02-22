@@ -9,8 +9,7 @@
         "regenerator-runtime": "^0.13.2",
         "sass": "^1.32.6",
         "sass-loader": "^10.0.0",
-        "stimulus": "^2.0.0",
-        "tabler-ui": "^0.0.32"
+        "stimulus": "^2.0.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -20,5 +19,7 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {}
+    "dependencies": {
+        "@tabler/core": "^1.0.0-beta"
+    }
 }

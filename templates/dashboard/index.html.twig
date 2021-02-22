@@ -10,45 +10,46 @@
                         <a href="{{ path('game_new') }}" class="btn btn-success btn-sm" title="Neues Spiel"><i class="fas fa-plus"></i> Neues Spiel</a>
                     </div>
                 </div>
-                        <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                <div>
+                    <table class="table table-vcenter card-table">
                             <thead>
-                            <tr>
-                                <th>Spiel</th>
-                                <th>Erstellt am</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>Spiel</th>
+                                    <th>Erstellt am</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
                             {% for game in games %}
                                 <tr>
                                     <td>{{ game.name }}</td>
                                     <td>{{ game.createdAt|format_datetime('short', 'none') }}</td>
-                                    <td class="text-right">
-                                        <a href="{{ path('protocol_index', {'game': game.id}) }}"  title="Das Protokoll zum Spiel öffnen" class="btn btn-primary btn-sm"><i class="fas fa-clipboard-check"></i> Funkprotokoll</a>
-                                        <div class="item-action dropdown">
+                                    <td class="text-end">
+                                        <a href="{{ path('protocol_index', {'game': game.id}) }}"  title="Das Protokoll zum Spiel öffnen" class="btn btn-primary btn-sm"><i class="fas fa-clipboard-check"></i>&nbsp;Funkprotokoll</a>
+                                        <span class="dropdown">
                                             <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Aktionen</button>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item no-loader" href="{{ path('game_export', {'id': game.id}) }}" title="Die Daten zum Spiel nach Excel exportieren">
-                                                    <i class="dropdown-icon fas fa-file-excel"></i> Exportieren
+                                                    <i class="dropdown-icon fas fa-file-excel"></i>&nbsp;Exportieren
                                                 </a>
                                                 {% if game.closedAt is null %}
                                                     <a class="dropdown-item" href="{{ path('game_edit', {'id': game.id}) }}" title="Das Spiel bearbeiten">
-                                                        <i class="dropdown-icon fas fa-edit"></i> Bearbeiten
+                                                        <i class="dropdown-icon fas fa-edit"></i>&nbsp;Bearbeiten
                                                     </a>
                                                     <a class="dropdown-item" href="{{ path('game_lock', {'id': game.id}) }}" title="Das Spiel vor Bearbeitung sperren">
-                                                        <i class="dropdown-icon fas fa-lock"></i> Sperren
+                                                        <i class="dropdown-icon fas fa-lock"></i>&nbsp;Sperren
                                                     </a>
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item text-danger game-delete" href="{{ path('game_delete', {'id': game.id}) }}" title="Das Spiel löschen">
-                                                        <i class="dropdown-icon fas fa-trash-alt"></i> Löschen
+                                                        <i class="dropdown-icon fas fa-trash-alt"></i>&nbsp;Löschen
                                                     </a>
                                                 {% else %}
                                                     <a class="dropdown-item" href="{{ path('game_unlock', {'id': game.id}) }}" title="Das Spiel zur Bearbeitung freigeben">
-                                                        <i class="dropdown-icon fas fa-unlock"></i> Entsperren
+                                                        <i class="dropdown-icon fas fa-unlock"></i>&nbsp;Entsperren
                                                     </a>
                                                 {% endif %}
                                             </div>
-                                        </div>
+                                        </span>
                                     </td>
                                 </tr>
                             {% else %}
@@ -58,6 +59,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                </div>
             </div>
         </div>
     </div>
