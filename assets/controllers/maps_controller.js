@@ -9,7 +9,9 @@ export default class extends Controller {
 
     x = 0;
     y = 0;
-    color = "#ababab";
+
+    color = "red";
+    opacity = 0.2;
 
     roof = null;
     roofPoints = [];
@@ -29,6 +31,7 @@ export default class extends Controller {
         // Handle Form Elements to edit the canvas
         this.handleDraw();
         this.handleColorPicker();
+        this.handleOpacityPicker();
         this.handleAutoUpdateOfTargetInput();
         this.handleBgImagePicker();
         this.handleSerializerButtonForDebug();
@@ -208,12 +211,20 @@ export default class extends Controller {
             return;
         }
 
-        this.color = colorPickerElement?.value ?? this.color;
+        this.color = colorPickerElement.value ?? this.color;
 
-        colorPickerElement.addEventListener('change', function () {
+        colorPickerElement.addEventListener('input', function () {
             that.color = this.value;
             that.setActiveElementsColor(this.value);
         });
+
+        this.canvas.on('selection:updated', (e) => {
+            let selectedElements = e.selected,
+                selectedColor = selectedElements[selectedElements.length - 1].fill;
+
+            colorPickerElement.value = selectedColor;
+            that.color = selectedColor;
+        })
 
         this.canvas.on('selection:created', (e) => {
             let selectedElements = e.selected,
@@ -221,6 +232,37 @@ export default class extends Controller {
 
             colorPickerElement.value = selectedColor;
             that.color = selectedColor;
+        })
+    }
+
+    handleOpacityPicker() {
+        let that = this,
+            opacityPickerElement = document.getElementById(this.opacityPickerInput);
+
+        if (opacityPickerElement === null) {
+            return;
+        }
+
+        this.opacity = opacityPickerElement.value ?? this.opacity;
+
+        document.getElementById('opacity').addEventListener('input', (e) => {
+            that.setActiveElementsOpacity(e.target.value);
+        });
+
+        this.canvas.on('selection:updated', (e) => {
+            let selectedElements = e.selected,
+                selectedOpacity = selectedElements[selectedElements.length - 1].opacity;
+
+            opacityPickerElement.value = selectedOpacity;
+            that.opacity = selectedOpacity;
+        })
+
+        this.canvas.on('selection:created', (e) => {
+            let selectedElements = e.selected,
+                selectedOpacity = selectedElements[selectedElements.length - 1].opacity;
+
+            opacityPickerElement.value = selectedOpacity;
+            that.opacity = selectedOpacity;
         })
     }
 
@@ -246,6 +288,17 @@ export default class extends Controller {
         canvas.getActiveObjects().forEach((obj) => {
             obj.set('fill', color);
             obj.set('stroke', color);
+        })
+
+        canvas.renderAll.bind(canvas);
+        canvas.renderAll();
+    }
+
+    setActiveElementsOpacity(opacity) {
+        let canvas = this.canvas;
+
+        canvas.getActiveObjects().forEach((obj) => {
+            obj.set('opacity', opacity);
         })
 
         canvas.renderAll.bind(canvas);
@@ -288,17 +341,16 @@ export default class extends Controller {
         var left = this.findLeftPaddingForRoof(roofPoints);
         var top = this.findTopPaddingForRoof(roofPoints);
         roofPoints.push(new this.Point(this.roofPoints[0]?.x, this.roofPoints[0]?.y))
+
         var roof = new fabric.Polyline(roofPoints, {
             fill: this.color,
-            opacity: 0.2,
+            opacity: this.opacity,
             stroke: this.color,
             hasControls: false
         });
         roof.set({
-
             left: left,
             top: top,
-
         });
 
 
@@ -335,6 +387,10 @@ export default class extends Controller {
 
     get colorPickerInput() {
         return this.data.get('colorPickerInput');
+    }
+
+    get opacityPickerInput() {
+        return this.data.get('opacityPickerInput');
     }
 
     get bgImagePicker() {

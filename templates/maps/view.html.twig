@@ -5,63 +5,6 @@
         <h1>Standortkarte "{{ map.name }}"</h1>
     </div>
 
-    {{ form_start(form) }}
-    <div class="row row-cards"
-         data-controller="maps"
-         data-maps-maps-field="canvas-tools"
-         data-maps-draw-button="poly"
-         data-maps-form-input="map_map"
-         data-maps-color-picker-input="color"
-         data-maps-bg-image-picker="bg_image"
-         data-maps-debug-output-button = "serialize"
-         data-maps-debug-output-field = "content"
-    >
-        <div class="col-10">
-            <div class="card">
-                <canvas id="canvas-tools" class="card-body" height="600" width="976"></canvas>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-3">
-                        <button id="poly" class="btn btn-primary btn-block">Zeichne Bereich</button>
-                    </div>
-                    <div class="mb-3">
-                        <button id="serialize" class="btn btn-primary btn-block">Serialisiere</button>
-                    </div>
-                    <div class="mb-3 card">
-                        <div class="card-body p-2">
-                            <div class="form-label">Sektorfarbe</div>
-                            <input type="color" id="color"/>
-                        </div>
-                    </div>
-                    <div class="mb-3 card">
-                        <div class="card-body p-2">
-                            <div class="form-label">Hintergrundbild</div>
-                            <input type="file" class="form-control" id="bg_image"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-cards">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <pre id="content" style="white-space:pre-wrap;"></pre>
+    {% include('maps/_form.html.twig') %}
 
-                    {{ form_widget(form) }}
-                </div>
-                <div class="card-footer text-end">
-                    <div class="d-flex">
-                        <a href="{{ path('maps_index') }}" class="btn btn-link">Abbrechen</a>
-                        <button type="submit" data-check-form="map" class="btn btn-primary m-sm-auto">Speichern</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}
