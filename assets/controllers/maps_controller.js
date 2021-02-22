@@ -3,9 +3,13 @@ import {fabric} from 'fabric';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
+    // @var Canvas|null
     canvas = null;
+    preservedProperties = ['area_name', 'area_vdo'];
+
     x = 0;
     y = 0;
+    color = "#ababab";
 
     roof = null;
     roofPoints = [];
@@ -19,53 +23,34 @@ export default class extends Controller {
     }
 
     connect() {
-        console.log(this.mapsField);
-
-        let that = this;
         this.canvas = new fabric.Canvas(this.mapsField);
+        this.fillCanvasFromDefaultField();
 
-        // Set Background Image with Location Map :D
-        // canvas.setBackgroundImage('../assets/pug.jpg', canvas.renderAll.bind(canvas));
+        // Handle Form Elements to edit the canvas
+        this.handleDraw();
+        this.handleColorPicker();
+        this.handleAutoUpdateOfTargetInput();
+        this.handleBgImagePicker();
+        this.handleSerializerButtonForDebug();
 
-        // Eigenschaften der Polyline im Read-Only-Modus:
-        // "selectable":false, "hoverCursor":"default"
-
-        this.canvas.loadFromJSON(
-            '{"version":"4.3.1","objects":[{"type":"polyline","vdo_groups":[100,200],"selectable": false,"hoverCursor":"default","version":"4.3.1","originX":"left","originY":"top","left":193,"top":138.17,"width":594,"height":453,"fill":"rgba(12,145,13,26)","stroke":"#58c","strokeWidth":1,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeUniform":false,"strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","skewX":0,"skewY":0,"points":[{"x":193,"y":138.171875},{"x":600,"y":591.171875},{"x":787,"y":303.171875},{"x":787,"y":303.171875},{"x":193,"y":138.171875}]}]}',
-            this.canvas.renderAll.bind(this.canvas)
-        );
-
-        document.getElementById('serialize').addEventListener('click', function () {
-            // To ensure custom properties will be saved give them to "toJSON"-Method
-            // that.canvas.toJSON(["vdo_groups"])
-
-            document.getElementById('content').textContent = JSON.stringify(that.canvas.toJSON(["vdo_groups"]));
-        });
-
-        document.addEventListener("keyup", function (e) {
-            if (e.code !== "Delete") {
-                return;
-            }
-
-            that.canvas.getActiveObjects().forEach((obj) => {
-                that.canvas.remove(obj)
-            });
-            that.canvas.discardActiveObject().renderAll()
-        });
 
         this.canvas.on('mouse:over', function (e) {
             if (e.target === null || e.target.type !== 'polyline') {
                 return;
             }
 
-            console.log(e.target.get('vdo_groups'));
+            if (e.target.get('vdo_groups') === undefined) {
+                return;
+            }
+            /*
+                        console.log(e.target.get('vdo_groups'));
 
-            let $tooltip = document.getElementById('canvas-tooltip');
+                        let $tooltip = document.getElementById('canvas-tooltip');
 
-            $tooltip.innerHTML = e.target.get('vdo_groups').join(', ');
-            $tooltip.style.visibility = 'visible'
-            $tooltip.style.top = e.e.offsetY + 'px'
-            $tooltip.style.left = e.e.offsetX + 'px'
+                        $tooltip.innerHTML = e.target.get('vdo_groups').join(', ');
+                        $tooltip.style.visibility = 'visible'
+                        $tooltip.style.top = e.e.offsetY + 'px'
+                        $tooltip.style.left = e.e.offsetX + 'px' */
         });
 
         this.canvas.on('mouse:out', function (e) {
@@ -73,15 +58,33 @@ export default class extends Controller {
                 return;
             }
 
-            console.log(e.target.get('vdo_groups'));
+            //console.log(e.target.get('vdo_groups'));
 
-            let $tooltip = document.getElementById('canvas-tooltip');
-            $tooltip.style.visibility = 'hidden'
+            //let $tooltip = document.getElementById('canvas-tooltip');
+            //$tooltip.style.visibility = 'hidden'
         });
+    }
 
+    handleReadOnlyForExistingElement() {
+        this.canvas.getObjects().forEach((obj) => {
+            obj.selectable = false;
+            obj.hoverCursor = "default";
+        });
+        this.canvas.renderAll();
+    }
 
-        document.getElementById('poly').addEventListener('click', function () {
-            console.log(that.drawingObject);
+    handleDraw() {
+        let that = this,
+            drawButton = document.getElementById(this.drawButton);
+
+        if (drawButton === null) {
+            // Without the draw button we will set all to read only
+            this.handleReadOnlyForExistingElement();
+            return;
+        }
+
+        drawButton.addEventListener('click', function (e) {
+            e.preventDefault();
 
             if (that.drawingObject.type === "roof") {
                 that.drawingObject.type = "";
@@ -107,7 +110,6 @@ export default class extends Controller {
             that.canvas.add(that.roof);
             that.canvas.renderAll();
 
-            console.log("double click");
             //clear arrays
             that.roofPoints = [];
             that.lines = [];
@@ -123,7 +125,7 @@ export default class extends Controller {
                 that.lines.push(new fabric.Line(points, {
                     strokeWidth: 1,
                     selectable: false,
-                    stroke: 'red'
+                    stroke: that.color
                 }));
 
                 that.canvas.add(that.lines[that.lineCounter]);
@@ -145,6 +147,121 @@ export default class extends Controller {
             }
         });
 
+        document.addEventListener("keyup", function (e) {
+            if (e.code !== "Delete") {
+                return;
+            }
+
+            that.canvas.getActiveObjects().forEach((obj) => {
+                that.canvas.remove(obj)
+            });
+            that.canvas.discardActiveObject().renderAll()
+        });
+    }
+
+    handleBgImagePicker() {
+        let canvas = this.canvas,
+            bgImagePicker = document.getElementById(this.bgImagePicker);
+
+        if (bgImagePicker === null) {
+            return;
+        }
+
+        bgImagePicker.addEventListener('change', function (e) {
+            canvas.setBackgroundColor('', canvas.renderAll.bind(canvas));
+            canvas.setBackgroundImage(0, canvas.renderAll.bind(canvas));
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function (f) {
+                var data = f.target.result;
+                fabric.Image.fromURL(data, function (img) {
+                    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                        scaleX: canvas.width / img.width,
+                        scaleY: canvas.height / img.height
+                    });
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    handleAutoUpdateOfTargetInput() {
+        let canvas = this.canvas,
+            formInput = document.getElementById(this.formInput);
+
+        if (formInput === null) {
+            return;
+        }
+
+        canvas.on('after:render', function () {
+            // document.getElementById('content').textContent = JSON.stringify(that.canvas.toJSON(["vdo_groups"]));
+            formInput.value = JSON.stringify(canvas.toJSON(["vdo_groups"]));
+        });
+
+    }
+
+    handleColorPicker() {
+        let that = this,
+            colorPickerElement = document.getElementById(this.colorPickerInput);
+
+        if (colorPickerElement === null) {
+            return;
+        }
+
+        this.color = colorPickerElement?.value ?? this.color;
+
+        colorPickerElement.addEventListener('change', function () {
+            that.color = this.value;
+            that.setActiveElementsColor(this.value);
+        });
+
+        this.canvas.on('selection:created', (e) => {
+            let selectedElements = e.selected,
+                selectedColor = selectedElements[selectedElements.length - 1].fill;
+
+            colorPickerElement.value = selectedColor;
+            that.color = selectedColor;
+        })
+    }
+
+    handleSerializerButtonForDebug() {
+        let debugOutputField = document.getElementById(this.debugOutputField),
+            debugOutputButton = document.getElementById(this.debugOutputButton),
+            canvas = this.canvas,
+            preserveCanvasFields = this.preservedProperties;
+
+        if (debugOutputField === null || debugOutputButton === null) {
+            return;
+        }
+
+        debugOutputButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            debugOutputField.textContent = JSON.stringify(canvas.toJSON(preserveCanvasFields));
+        });
+    }
+
+    setActiveElementsColor(color) {
+        let canvas = this.canvas;
+
+        canvas.getActiveObjects().forEach((obj) => {
+            obj.set('fill', color);
+            obj.set('stroke', color);
+        })
+
+        canvas.renderAll.bind(canvas);
+        canvas.renderAll();
+    }
+
+    fillCanvasFromDefaultField() {
+        let defaultContent = document.getElementById(this.formInput).value,
+            canvas = this.canvas;
+
+        canvas.loadFromJSON(defaultContent, canvas.renderAll.bind(canvas));
+        canvas.getObjects().forEach((obj) => {
+            obj.hasControls = false;
+        })
+
+        canvas.renderAll.bind(canvas);
     }
 
     setStartingPoint(options) {
@@ -172,9 +289,9 @@ export default class extends Controller {
         var top = this.findTopPaddingForRoof(roofPoints);
         roofPoints.push(new this.Point(this.roofPoints[0]?.x, this.roofPoints[0]?.y))
         var roof = new fabric.Polyline(roofPoints, {
-            fill: 'red',
+            fill: this.color,
             opacity: 0.2,
-            stroke: '#58c',
+            stroke: this.color,
             hasControls: false
         });
         roof.set({
@@ -210,5 +327,29 @@ export default class extends Controller {
 
     get mapsField() {
         return this.data.get('mapsField');
+    }
+
+    get formInput() {
+        return this.data.get('formInput');
+    }
+
+    get colorPickerInput() {
+        return this.data.get('colorPickerInput');
+    }
+
+    get bgImagePicker() {
+        return this.data.get('bgImagePicker');
+    }
+
+    get debugOutputField() {
+        return this.data.get('debugOutputField');
+    }
+
+    get debugOutputButton() {
+        return this.data.get('debugOutputButton');
+    }
+
+    get drawButton() {
+        return this.data.get('drawButton');
     }
 }
