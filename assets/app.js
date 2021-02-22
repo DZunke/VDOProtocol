@@ -5,7 +5,8 @@ require('./css/fontawesome.min.css');
 require('./css/brands.min.css');
 require('./css/solid.css');
 
-import 'bootstrap/dist/js/bootstrap.min';
+import 'bootstrap';
+import './bootstrap'
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
