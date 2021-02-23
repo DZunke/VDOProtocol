@@ -4,6 +4,7 @@
          data-maps-maps-field="canvas-tools"
          data-maps-draw-button="poly"
          data-maps-form-input="map_map"
+         data-maps-sector-name-input="sector_name"
          data-maps-color-picker-input="color"
          data-maps-opacity-picker-input="opacity"
          data-maps-bg-image-picker="bg_image"
@@ -21,19 +22,25 @@
                     </div>
                     <div class="mb-3 card">
                         <div class="card-body p-2">
-                            <div class="form-label">Sektorfarbe</div>
+                            <label class="form-label" for="sector_name">Bezeichnung</label>
+                            <input type="text" class="form-control" id="sector_name" />
+                        </div>
+                    </div>
+                    <div class="mb-3 card">
+                        <div class="card-body p-2">
+                            <label class="form-label" for="color">Sektorfarbe</label>
                             <input type="color" id="color"/>
                         </div>
                     </div>
                     <div class="mb-3 card">
                         <div class="card-body p-2">
-                            <div class="form-label">Sektortransparenz</div>
+                            <label class="form-label" for="opacity">Sektortransparenz</label>
                             <input type="range" id="opacity" value="0.2" min="0.1" max="1" step="0.1">
                         </div>
                     </div>
                     <div class="mb-3 card">
                         <div class="card-body p-2">
-                            <div class="form-label">Hintergrundbild</div>
+                            <label class="form-label" for="bg_image">Hintergrundbild</label>
                             <input type="file" class="form-control" id="bg_image"/>
                         </div>
                     </div>

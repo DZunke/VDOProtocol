@@ -5,7 +5,7 @@ import {fabric} from 'fabric';
 export default class extends Controller {
     // @var Canvas|null
     canvas = null;
-    preservedProperties = ['area_name', 'area_vdo'];
+    preservedProperties = ['sector_name', 'area_vdo'];
 
     x = 0;
     y = 0;
@@ -26,10 +26,12 @@ export default class extends Controller {
 
     connect() {
         this.canvas = new fabric.Canvas(this.mapsField);
+
         this.fillCanvasFromDefaultField();
 
         // Handle Form Elements to edit the canvas
         this.handleDraw();
+        this.handleSectorName();
         this.handleColorPicker();
         this.handleOpacityPicker();
         this.handleAutoUpdateOfTargetInput();
@@ -103,12 +105,15 @@ export default class extends Controller {
         });
 
         fabric.util.addListener(window, 'dblclick', function () {
+            if (that.drawingObject.type === '') {
+                return;
+            }
+
             that.drawingObject.type = "";
             that.lines.forEach(function (value, index, ar) {
                 that.canvas.remove(value);
             });
 
-            //canvas.remove(lines[lineCounter - 1]);
             that.roof = that.makeRoof(that.roofPoints);
             that.canvas.add(that.roof);
             that.canvas.renderAll();
@@ -190,22 +195,63 @@ export default class extends Controller {
 
     handleAutoUpdateOfTargetInput() {
         let canvas = this.canvas,
-            formInput = document.getElementById(this.formInput);
+            formInput = document.getElementById(this.formInput),
+            preserveCanvasFields = this.preservedProperties;
 
         if (formInput === null) {
             return;
         }
 
         canvas.on('after:render', function () {
-            // document.getElementById('content').textContent = JSON.stringify(that.canvas.toJSON(["vdo_groups"]));
-            formInput.value = JSON.stringify(canvas.toJSON(["vdo_groups"]));
+            formInput.value = JSON.stringify(canvas.toJSON(preserveCanvasFields));
         });
 
     }
 
+    handleSectorName() {
+        let that = this,
+            sectorNameElement = document.getElementById(this.sectorNameInput),
+            handleSectorName = (e) => {
+                let selectedElements = e.selected;
+
+                if (selectedElements === undefined) {
+                    sectorNameElement.value = '';
+                    return;
+                }
+
+                sectorNameElement.value = selectedElements[selectedElements.length - 1].get('sector_name') ?? '';
+            };
+
+        if (sectorNameElement === null) {
+            return;
+        }
+
+        sectorNameElement.addEventListener('input', function () {
+            let canvas = that.canvas,
+                activeObject = canvas.getActiveObject();
+
+            if (activeObject === undefined) {
+                return;
+            }
+
+            canvas.getActiveObject().set('sector_name', this.value);
+        });
+
+        this.canvas.on('selection:updated', handleSectorName);
+        this.canvas.on('selection:created', handleSectorName);
+        this.canvas.on('selection:cleared', handleSectorName);
+    }
+
     handleColorPicker() {
         let that = this,
-            colorPickerElement = document.getElementById(this.colorPickerInput);
+            colorPickerElement = document.getElementById(this.colorPickerInput),
+            handleColorPicker = (e) => {
+                let selectedElements = e.selected,
+                    selectedColor = selectedElements[selectedElements.length - 1].fill;
+
+                colorPickerElement.value = selectedColor;
+                that.color = selectedColor;
+            };
 
         if (colorPickerElement === null) {
             return;
@@ -218,26 +264,20 @@ export default class extends Controller {
             that.setActiveElementsColor(this.value);
         });
 
-        this.canvas.on('selection:updated', (e) => {
-            let selectedElements = e.selected,
-                selectedColor = selectedElements[selectedElements.length - 1].fill;
-
-            colorPickerElement.value = selectedColor;
-            that.color = selectedColor;
-        })
-
-        this.canvas.on('selection:created', (e) => {
-            let selectedElements = e.selected,
-                selectedColor = selectedElements[selectedElements.length - 1].fill;
-
-            colorPickerElement.value = selectedColor;
-            that.color = selectedColor;
-        })
+        this.canvas.on('selection:updated', handleColorPicker);
+        this.canvas.on('selection:created', handleColorPicker);
     }
 
     handleOpacityPicker() {
         let that = this,
-            opacityPickerElement = document.getElementById(this.opacityPickerInput);
+            opacityPickerElement = document.getElementById(this.opacityPickerInput),
+            handleOpacityPicker = (e) => {
+                let selectedElements = e.selected,
+                    selectedOpacity = selectedElements[selectedElements.length - 1].opacity;
+
+                opacityPickerElement.value = selectedOpacity;
+                that.opacity = selectedOpacity;
+            };
 
         if (opacityPickerElement === null) {
             return;
@@ -249,21 +289,8 @@ export default class extends Controller {
             that.setActiveElementsOpacity(e.target.value);
         });
 
-        this.canvas.on('selection:updated', (e) => {
-            let selectedElements = e.selected,
-                selectedOpacity = selectedElements[selectedElements.length - 1].opacity;
-
-            opacityPickerElement.value = selectedOpacity;
-            that.opacity = selectedOpacity;
-        })
-
-        this.canvas.on('selection:created', (e) => {
-            let selectedElements = e.selected,
-                selectedOpacity = selectedElements[selectedElements.length - 1].opacity;
-
-            opacityPickerElement.value = selectedOpacity;
-            that.opacity = selectedOpacity;
-        })
+        this.canvas.on('selection:updated', handleOpacityPicker);
+        this.canvas.on('selection:created', handleOpacityPicker);
     }
 
     handleSerializerButtonForDebug() {
@@ -383,6 +410,10 @@ export default class extends Controller {
 
     get formInput() {
         return this.data.get('formInput');
+    }
+
+    get sectorNameInput() {
+        return this.data.get('sectorNameInput');
     }
 
     get colorPickerInput() {
