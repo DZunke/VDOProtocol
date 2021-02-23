@@ -58,9 +58,14 @@ export default class extends Controller {
             return;
         }
 
+        $event.preventDefault()
         this.reset();
 
         let $element = $event.target;
+        if ($event.target.nodeName === 'I') {
+            $element = $event.target.parentNode;
+        }
+
         let $id = $element.dataset.id;
         let $highliteClass = $element.dataset.highlite;
         let $idFormElement = document.getElementById('protocol_parent');
@@ -85,7 +90,7 @@ export default class extends Controller {
         let formAppendingCancelButton = document.createElement('button');
         formAppendingCancelButton.id = 'protocol-add-child-reset';
         formAppendingCancelButton.type = 'button';
-        formAppendingCancelButton.className = 'btn btn-block btn-primary';
+        formAppendingCancelButton.className = 'btn btn-block btn-secondary';
         formAppendingCancelButton.tabIndex = 4;
         formAppendingCancelButton.innerText = 'Abbrechen';
 

@@ -27,7 +27,7 @@
                                     <td class="text-end">
                                         <a href="{{ path('protocol_index', {'game': game.id}) }}"  title="Das Protokoll zum Spiel öffnen" class="btn btn-primary btn-sm"><i class="fas fa-clipboard-check"></i>&nbsp;Funkprotokoll</a>
                                         <span class="dropdown">
-                                            <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Aktionen</button>
+                                            <button class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aktionen</button>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item no-loader" href="{{ path('game_export', {'id': game.id}) }}" title="Die Daten zum Spiel nach Excel exportieren">
                                                     <i class="dropdown-icon fas fa-file-excel"></i>&nbsp;Exportieren

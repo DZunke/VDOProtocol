@@ -99,6 +99,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "erusev/parsedown": {
+        "version": "1.7.4"
+    },
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
     },
@@ -711,6 +714,9 @@
     },
     "twig/intl-extra": {
         "version": "v3.0.1"
+    },
+    "twig/markdown-extra": {
+        "version": "v3.3.0"
     },
     "twig/twig": {
         "version": "v2.6.2"

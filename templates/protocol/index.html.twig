@@ -40,7 +40,7 @@
                                         <small class="float-right text-muted text-right">
                                             {{ protocol.createdAt|ago }} - {{ protocol.createdAt|format_datetime('none', 'short') }}
                                             {% if game.closedAt is null %}
-                                                &nbsp;<a href="#" data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-icon no-loader" data-action="protocol#addChildEntry"><i class="fas fa-plus m-0"></i></a>
+                                                &nbsp;<button data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm no-loader" data-action="protocol#addChildEntry"><i class="fas fa-plus p-1"></i></button>
                                             {% endif %}
                                         </small>
                                         <h5 class="mb-0">Von <span class="bold protocol-sender">{{ protocol.sender ?: '10' }}</span> an <span class=  "bold protocol-recipent">{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</span></h5>

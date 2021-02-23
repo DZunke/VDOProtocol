@@ -1,6 +1,6 @@
 framework:
     secret: '%env(APP_SECRET)%'
-    default_locale: de
+    default_locale: '%env(APP_LOCALE)%'
 
     serializer:
         enable_annotations: false

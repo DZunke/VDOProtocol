@@ -1,5 +1,7 @@
 // any CSS you require will output into a single css file (app.css in this case)
 // require('tabler-ui/dist/assets/css/dashboard.css');
+
+require('bootstrap/scss/_media.scss');
 require('@tabler/core/dist/css/tabler.min.css');
 require('./css/app.scss');
 require('./css/fontawesome.min.css');
