@@ -8,7 +8,7 @@ use App\Entity\Game;
 use App\Form\GameType;
 use App\Model\GameExporter;
 use DateTimeImmutable;
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,13 +132,13 @@ class GameController extends AbstractController
     public function export(Game $game): StreamedResponse
     {
         $spreadsheet = (new GameExporter())->export($game);
-        $writer      = new Xls($spreadsheet);
+        $writer      = new Xlsx($spreadsheet);
 
         $response = new StreamedResponse(static function () use ($writer): void {
             $writer->save('php://output');
         });
         $response->headers->set('Content-Type', 'application/vnd.ms-excel');
-        $response->headers->set('Content-Disposition', 'attachment;filename="' . $game->getId() . '.xls"');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $game->getId() . '.xlsx"');
         $response->headers->set('Cache-Control', 'max-age=0');
 
         return $response;

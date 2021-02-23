@@ -37,8 +37,6 @@ export default class extends Controller {
             return;
         }
 
-        console.log($element);
-
         if ($element !== undefined && $element.classList.contains('no-loader')) {
             return;
         }
