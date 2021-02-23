@@ -10,7 +10,7 @@
             {{ form_start(form, {'attr': {'class': 'card'}}) }}
                 <div class="card-body">
                     {{ form_widget(form) }}
-                    <button class="btn btn-primary">Speichern</button>
+                    <button type="submit" class="btn btn-primary" data-check-form="game">Speichern</button>
                     <a href="{{ path('dashboard') }}" class="btn btn-secondary">Abbrechen</a>
                 </div>
             {{ form_end(form) }}
