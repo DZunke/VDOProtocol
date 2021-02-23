@@ -17,7 +17,7 @@ phpdesktop: ## build phpdesktop release
 	cd build/php; unzip php-8.0-nts-Win32-vs16-x86-latest.zip
 	cd build/php; rm php-8.0-nts-Win32-vs16-x86-latest.zip
 
-	git archive master | (cd build/www; tar x)
+	git archive HEAD | (cd build/www; tar x)
 	cd build/www; mv config/phpdesktop/php.ini ../php
 	cd build/www; mv config/phpdesktop/settings.json ../
 	cd build/www; mv .env.prod .env
