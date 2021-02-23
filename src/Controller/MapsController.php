@@ -42,6 +42,8 @@ final class MapsController extends AbstractController
             $entityManager->persist($form->getData());
             $entityManager->flush();
 
+            $this->saveMapToFile($form->getData());
+
             $this->addFlash(
                 'success',
                 'Die Standortkarte mit dem Namen "' . $form->getData()->getName() . '" wurde erfolgreich gespeichert.'
@@ -64,6 +66,7 @@ final class MapsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+            $this->saveMapToFile($map);
 
             $this->addFlash(
                 'success',
@@ -80,5 +83,17 @@ final class MapsController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    private function saveMapToFile(Map $map) : string
+    {
+        $output_file = __DIR__ . '/../../public/maps/' . $map->getId() . '.png';
+
+        $file = fopen($output_file, "wb");
+        $data = explode(',', $map->getMapImage());
+        fwrite($file, base64_decode($data[1]));
+        fclose($file);
+
+        return $output_file;
     }
 }

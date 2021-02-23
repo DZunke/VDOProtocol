@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Map;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,6 +36,25 @@ final class MapType extends AbstractType
             'map',
             HiddenType::class,
             ['empty_data' => '{}']
+        );
+
+        $builder->add(
+            'map_image',
+            HiddenType::class,
+            ['empty_data' => '']
+        );
+
+        $builder->get('map_image')->addModelTransformer(
+            new CallbackTransformer(
+                function () {
+                    return '';
+                },
+                function ($tagsAsString) {
+                    dump($tagsAsString);
+
+                    return $tagsAsString;
+                }
+            )
         );
     }
 

@@ -38,6 +38,11 @@ export default class extends Controller {
         this.handleBgImagePicker();
         this.handleSerializerButtonForDebug();
 
+        let that = this;
+        document.getElementsByName('map')[0].addEventListener('submit', (e) => {
+            document.getElementById('map_map_image').value = that.canvas.toDataURL("image/png");
+        });
+
 
         this.canvas.on('mouse:over', function (e) {
             if (e.target === null || e.target.type !== 'polyline') {

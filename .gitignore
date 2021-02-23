@@ -1,5 +1,6 @@
 .phpcs-cache
 /build
+/public/maps
 
 ###> symfony/framework-bundle ###
 /.env.local

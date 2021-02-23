@@ -30,6 +30,9 @@ final class Map
     /** @ORM\Column(type="text") */
     private string $map = '{}';
 
+    /** @ORM\Column(type="text", nullable=true) */
+    private string $mapImage;
+
     /** @ORM\Column(type="datetime_immutable") */
     private DateTimeImmutable $createdAt;
 
@@ -74,6 +77,16 @@ final class Map
         Assertion::isJsonString($map, 'The map must be a valid json configuration');
 
         $this->map = $map;
+    }
+
+    public function getMapImage()
+    {
+        return $this->mapImage;
+    }
+
+    public function setMapImage(string $mapImage): void
+    {
+        $this->mapImage = $mapImage;
     }
 
     public function getCreatedAt(): DateTimeImmutable
