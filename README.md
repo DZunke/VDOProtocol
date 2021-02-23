@@ -10,6 +10,8 @@ Eine Software zur Begleitung der Funkleitstelle von Veranstaltungen.
 
 ![image](https://user-images.githubusercontent.com/1244235/108880147-48e65980-7602-11eb-9cc4-4608cfbe3103.png)
 
+**Diese README ist für die Entwicklungsversion v2.x - Die README für die Version v1.x findet sich [hier](https://github.com/DZunke/VDOLog/tree/v1.x)**
+
 ## Funktionalitäten
 
 * Erstellung von Veranstaltungen
