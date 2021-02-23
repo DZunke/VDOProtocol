@@ -13,3 +13,4 @@ protocol of radio communication and upgrade on outdated software components
 * Fix: The refresh button sometimes didn't load correct
 * Integration of a Changelog page
 * Dynamic Title and Logo through phpdesktop settings
+* Upgrade to PHP 8

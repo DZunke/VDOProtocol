@@ -14,3 +14,4 @@ und Vorbereitungen für die Weiterentwicklung durchgeführt.
 * Korrektur: Der Aktualisieren-Knopf funktionierte manchmal nicht korrekt
 * Einbindung einer Seite mit dem Änderungsprotokoll
 * Dynamischer Titel und Logo durch die Verwendung der PHPDesktop-Konfiguration
+* Aktualisierung auf PHP 8
