@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Übersicht der angelegten Standortkarten</h3>
                     <div class="card-options">
-                        <a href="{{ path('maps_new') }}" class="btn btn-success btn-sm" title="Neue Standortkarte"><i class="fas fa-plus"></i> Neue Standortkarte</a>
+                        <a href="{{ path('maps_new') }}" class="btn btn-success btn-sm" title="Neue Standortkarte"><i class="fas fa-plus"></i>&nbsp;Neue Standortkarte</a>
                     </div>
                 </div>
                         <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
@@ -24,8 +24,8 @@
                                 <tr>
                                     <td>{{ map.name }}</td>
                                     <td>{{ map.createdAt|format_datetime('short', 'none') }}</td>
-                                    <td class="text-right">
-                                        <a href="{{ path('maps_view', {'id': map.id}) }}"  title="Die Standortkarte {{ map.name }} ansehen und bearbeiten" class="btn btn-primary btn-sm"><<i class="dropdown-icon fas fa-edit"></i> Ansehen & Bearbeiten</a>
+                                    <td class="text-end">
+                                        <a href="{{ path('maps_view', {'id': map.id}) }}"  title="Die Standortkarte {{ map.name }} ansehen und bearbeiten" class="btn btn-primary btn-sm"><i class="dropdown-icon fas fa-edit"></i>&nbsp;Ansehen & Bearbeiten</a>
                                     </td>
                                 </tr>
                             {% else %}

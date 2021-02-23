@@ -43,16 +43,16 @@
                                                 &nbsp;<button data-id="{{ protocol.id }}" data-highlite="card" class="btn btn-success btn-sm no-loader" data-action="protocol#addChildEntry"><i class="fas fa-plus p-1"></i></button>
                                             {% endif %}
                                         </small>
-                                        <h5 class="mb-0">Von <span class="bold protocol-sender">{{ protocol.sender ?: '10' }}</span> an <span class=  "bold protocol-recipent">{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</span></h5>
+                                        <h5 class="mb-0 strong">Von <span class="bold protocol-sender">{{ protocol.sender ?: '10' }}</span> an <span class=  "bold protocol-recipent">{{ protocol.recipent ?: (protocol.sender is empty ? 'alle' : '10') }}</span></h5>
                                     </div>
                                     <div class="protocol-content">{{ protocol.content|nl2br }}</div>
                                     {% if protocol.children|length > 0 %}
-                                        <ul class="media-list mt-4 ml-5 protocol-entry-replies">
+                                        <ul class="mt-3 protocol-entry-replies">
                                             {% for protocolChild in protocol.children %}
-                                                <li class="media mt-4">
-                                                    <div class="media-body border-left pl-3 mb-3">
+                                                <li class="media p-1 {{ cycle(['bg-muted-lt', ''], loop.index0) }}">
+                                                    <div class="media-body border-left mb-3">
                                                         <small class="float-right text-muted">{{ protocolChild.createdAt|ago }} - {{ protocolChild.createdAt|format_datetime('none', 'short') }}</small>
-                                                        <strong>Von <strong>{{ protocolChild.sender ?: '10' }}</strong> an <strong>{{ protocolChild.recipent ?: (protocolChild.sender is empty ? 'alle VDO' : 'VDO 10') }}</strong></strong>
+                                                        <h5 class="mb-0 strong">Von {{ protocolChild.sender ?: '10' }} an {{ protocolChild.recipent ?: (protocolChild.sender is empty ? 'alle' : '10') }}</h5>
                                                         <div>{{ protocolChild.content|nl2br }}</div>
                                                     </div>
                                                 </li>
@@ -65,15 +65,7 @@
                     </div>
                 </div>
             {% else %}
-                <li class="list-group-item py-5">
-                    <div class="media">
-                        <div class="media-body">
-                            <div class="alert alert-info">
-                                Keine Einträge bisher
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                <div class="alert alert-info">Es liegen aktuell keine Aktivitäten vor</div>
             {% endfor %}
         </div>
     </div>
