@@ -2,6 +2,7 @@ on:
     push:
         branches:
             - master
+            - v1.x
 
 name: Build
 
