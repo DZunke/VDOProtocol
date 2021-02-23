@@ -6,14 +6,21 @@ export default class extends Controller {
     connect() {
         let that = this;
 
-        window.onbeforeunload = function () {
-            that.check();
+        window.onbeforeunload = function (e) {
+            // Removed due to double loading of loader and no-loader class on click is not working
+            // that.check();
         };
 
         document.querySelectorAll('a, button[type="submit"]').forEach(function (elem) {
             elem.addEventListener('click', ($event) => {
                 if (elem !== $event.target) return;
-                that.check($event.currentTarget);
+
+                let $element = $event.currentTarget;
+                if ($event.target.nodeName === 'I') {
+                    $element = $event.currentTarget.parentNode;
+                }
+
+                that.check($element);
             });
         });
 
@@ -29,6 +36,8 @@ export default class extends Controller {
         if ($existingLoader !== null) {
             return;
         }
+
+        console.log($element);
 
         if ($element !== undefined && $element.classList.contains('no-loader')) {
             return;
