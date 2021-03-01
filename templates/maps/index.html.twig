@@ -16,16 +16,14 @@
                             <tr>
                                 <th style="width: 50px;"></th>
                                 <th>Spiel</th>
-                                <th>Erstellt am</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for map in maps %}
                                 <tr>
-                                    <td><span class="avatar me-2" style="--tblr-avatar-size: 5.5rem; background-image: url('/maps/{{ map.id }}.png')"></span></td>
+                                    <td><span class="avatar me-2" style="--tblr-avatar-size: 5.5rem; background-image: url('/maps/{{ map.id }}.png?{{ map.mapImageUpdated.timestamp }}')"></span></td>
                                     <td>{{ map.name }}</td>
-                                    <td>{{ map.createdAt|format_datetime('short', 'none') }}</td>
                                     <td class="text-end">
                                         <a href="{{ path('maps_view', {'id': map.id}) }}"  title="Die Standortkarte {{ map.name }} ansehen und bearbeiten" class="btn btn-primary btn-sm"><i class="dropdown-icon fas fa-edit"></i>&nbsp;Ansehen & Bearbeiten</a>
                                     </td>
