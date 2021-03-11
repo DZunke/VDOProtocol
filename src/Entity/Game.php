@@ -48,6 +48,18 @@ class Game
     private $protocol;
 
     /**
+     * @ORM\ManyToMany(
+     *     targetEntity="App\Entity\Map",
+     *     fetch="EXTRA_LAZY",
+     *     indexBy="id"
+     * )
+     * @ORM\OrderBy({"name" = "ASC"})
+     *
+     * @var Collection<string,Map>
+     */
+    private $maps;
+
+    /**
      * @ORM\Column(type="datetime_immutable")
      *
      * @var DateTimeImmutable
@@ -65,6 +77,7 @@ class Game
     {
         $this->id        = Uuid::uuid4()->toString();
         $this->protocol  = new ArrayCollection();
+        $this->maps      = new ArrayCollection();
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -97,6 +110,34 @@ class Game
     public function getProtocol(): Collection
     {
         return new ArrayCollection($this->protocol->toArray());
+    }
+
+    /**
+     * @return Collection<string,Map>
+     */
+    public function getMaps(): Collection
+    {
+        return $this->maps;
+    }
+
+    /**
+     * @return Collection<string,string>
+     */
+    public function getMapNames(): Collection
+    {
+        return $this->maps->map(static function (Map $map): string {
+            return $map->getName();
+        });
+    }
+
+    public function addMap(Map $map): void
+    {
+        $this->maps->set($map->getId(), $map);
+    }
+
+    public function removeMap(Map $map): void
+    {
+        $this->maps->remove($map->getId());
     }
 
     public function getCreatedAt(): DateTimeImmutable

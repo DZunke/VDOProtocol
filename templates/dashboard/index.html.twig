@@ -15,6 +15,7 @@
                             <thead>
                                 <tr>
                                     <th>Spiel</th>
+                                    <th>Standorte</th>
                                     <th>Erstellt am</th>
                                     <th></th>
                                 </tr>
@@ -23,6 +24,7 @@
                             {% for game in games %}
                                 <tr>
                                     <td>{{ game.name }}</td>
+                                    <td>{{ game.mapNames|join(', ')|default('Keine Angabe') }}</td>
                                     <td>{{ game.createdAt|format_datetime('short', 'none') }}</td>
                                     <td class="text-end">
                                         <a href="{{ path('protocol_index', {'game': game.id}) }}"  title="Das Protokoll zum Spiel öffnen" class="btn btn-primary btn-sm"><i class="fas fa-clipboard-check"></i>&nbsp;Funkprotokoll</a>

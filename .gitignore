@@ -1,4 +1,5 @@
 .phpcs-cache
+.php-version
 /build
 /public/maps
 

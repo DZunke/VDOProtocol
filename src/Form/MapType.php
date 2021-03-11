@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Map;
@@ -13,12 +15,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class MapType extends AbstractType
 {
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Map::class]);
     }
 
+    /** @inheritDoc */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -46,16 +48,13 @@ final class MapType extends AbstractType
 
         $builder->get('map_image')->addModelTransformer(
             new CallbackTransformer(
-                function () {
+                static function (): string {
                     return '';
                 },
-                function ($tagsAsString) {
-                    dump($tagsAsString);
-
+                static function ($tagsAsString): string {
                     return $tagsAsString;
                 }
             )
         );
     }
-
 }

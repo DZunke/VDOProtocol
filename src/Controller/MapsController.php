@@ -11,6 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use function assert;
+use function base64_decode;
+use function explode;
+use function fclose;
+use function fopen;
+use function fwrite;
+
 /**
  * @Route("/maps")
  */
@@ -85,15 +92,16 @@ final class MapsController extends AbstractController
         );
     }
 
-    private function saveMapToFile(Map $map) : string
+    private function saveMapToFile(Map $map): string
     {
-        $output_file = __DIR__ . '/../../public/maps/' . $map->getId() . '.png';
+        $saveToFile = __DIR__ . '/../../public/maps/' . $map->getId() . '.png';
 
-        $file = fopen($output_file, "wb");
-        $data = explode(',', $map->getMapImage());
-        fwrite($file, base64_decode($data[1]));
+        $file = fopen($saveToFile, 'wb');
+        assert($file !== false);
+
+        fwrite($file, base64_decode(explode(',', $map->getMapImage())[1]), true);
         fclose($file);
 
-        return $output_file;
+        return $saveToFile;
     }
 }

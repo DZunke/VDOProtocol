@@ -98,7 +98,7 @@ final class Map
         return $this->createdAt;
     }
 
-    public function getMapImageUpdated() : DateTimeImmutable
+    public function getMapImageUpdated(): DateTimeImmutable
     {
         return $this->mapImageUpdated;
     }
