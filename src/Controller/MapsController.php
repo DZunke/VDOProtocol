@@ -99,7 +99,8 @@ final class MapsController extends AbstractController
         $file = fopen($saveToFile, 'wb');
         assert($file !== false);
 
-        fwrite($file, base64_decode(explode(',', $map->getMapImage())[1]), true);
+        $data = (string) base64_decode(explode(',', $map->getMapImage())[1], true);
+        fwrite($file, $data);
         fclose($file);
 
         return $saveToFile;
