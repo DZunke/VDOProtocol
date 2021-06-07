@@ -1,11 +1,12 @@
 import {Controller} from 'stimulus';
 import {fabric} from 'fabric';
+import { v4 as uuidv4 } from 'uuid';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
     // @var Canvas|null
     canvas = null;
-    preservedProperties = ['sector_name', 'area_vdo'];
+    preservedProperties = ['sector_id', 'sector_name'];
 
     x = 0;
     y = 0;
@@ -28,6 +29,7 @@ export default class extends Controller {
         this.canvas = new fabric.Canvas(this.mapsField);
 
         this.fillCanvasFromDefaultField();
+        this.handleSectorIds();
 
         // Handle Form Elements to edit the canvas
         this.handleDraw();
@@ -42,37 +44,6 @@ export default class extends Controller {
         document.getElementsByName('map')[0].addEventListener('submit', (e) => {
             document.getElementById('map_map_image').value = that.canvas.toDataURL("image/png");
         });
-
-
-        this.canvas.on('mouse:over', function (e) {
-            if (e.target === null || e.target.type !== 'polyline') {
-                return;
-            }
-
-            if (e.target.get('vdo_groups') === undefined) {
-                return;
-            }
-            /*
-                        console.log(e.target.get('vdo_groups'));
-
-                        let $tooltip = document.getElementById('canvas-tooltip');
-
-                        $tooltip.innerHTML = e.target.get('vdo_groups').join(', ');
-                        $tooltip.style.visibility = 'visible'
-                        $tooltip.style.top = e.e.offsetY + 'px'
-                        $tooltip.style.left = e.e.offsetX + 'px' */
-        });
-
-        this.canvas.on('mouse:out', function (e) {
-            if (e.target === null || e.target.type !== 'polyline') {
-                return;
-            }
-
-            //console.log(e.target.get('vdo_groups'));
-
-            //let $tooltip = document.getElementById('canvas-tooltip');
-            //$tooltip.style.visibility = 'hidden'
-        });
     }
 
     handleReadOnlyForExistingElement() {
@@ -80,6 +51,7 @@ export default class extends Controller {
             obj.selectable = false;
             obj.hoverCursor = "default";
         });
+
         this.canvas.renderAll();
     }
 
@@ -127,6 +99,8 @@ export default class extends Controller {
             that.roofPoints = [];
             that.lines = [];
             that.lineCounter = 0;
+
+            that.handleSectorIds();
         });
 
         this.canvas.on('mouse:down', function (options) {
@@ -201,16 +175,28 @@ export default class extends Controller {
     handleAutoUpdateOfTargetInput() {
         let canvas = this.canvas,
             formInput = document.getElementById(this.formInput),
-            preserveCanvasFields = this.preservedProperties;
+            preserveCanvasFields = this.preservedProperties,
+            that = this;
 
         if (formInput === null) {
             return;
         }
 
         canvas.on('after:render', function () {
+            that.handleSectorIds();
             formInput.value = JSON.stringify(canvas.toJSON(preserveCanvasFields));
         });
+    }
 
+    handleSectorIds() {
+        let canvas = this.canvas;
+
+        canvas.getObjects().forEach((obj) => {
+            let sector_id = obj.get('sector_id');
+            if (sector_id === undefined || sector_id === null) {
+                obj.set('sector_id', uuidv4())
+            }
+        });
     }
 
     handleSectorName() {

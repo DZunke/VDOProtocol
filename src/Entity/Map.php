@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Model\MapSettings;
 use Assert\Assertion;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use function json_decode;
 
 /**
  * @ORM\Entity()
@@ -90,7 +93,8 @@ final class Map
 
     public function setMapImage(string $mapImage): void
     {
-        $this->mapImage = $mapImage;
+        $this->mapImage        = $mapImage;
+        $this->mapImageUpdated = new DateTimeImmutable();
     }
 
     public function getCreatedAt(): DateTimeImmutable
@@ -101,5 +105,12 @@ final class Map
     public function getMapImageUpdated(): DateTimeImmutable
     {
         return $this->mapImageUpdated;
+    }
+
+    public function getSettings(): MapSettings
+    {
+        $settings = json_decode($this->map, true);
+
+        return MapSettings::fromArray($settings);
     }
 }

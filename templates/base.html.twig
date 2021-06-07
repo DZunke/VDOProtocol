@@ -47,7 +47,7 @@
         </div>
     </header>
     <div class="content">
-        <div class="container-xl">
+        <div class="{% block page_layout %}container-xl{% endblock %}">
             {% block flash_messages %}
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}

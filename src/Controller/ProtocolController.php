@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Game;
+use App\Entity\Map;
 use App\Entity\Protocol;
 use App\Form\ProtocolType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -39,5 +40,22 @@ class ProtocolController extends AbstractController
             'protocol_list' => $this->getDoctrine()->getRepository(Protocol::class)->findForListing($game),
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/{map}", name="game_map")
+     * @ParamConverter("game", class=Game::class, options={"id" = "game"})
+     * @ParamConverter("map", class=Map::class, options={"id" = "map"})
+     */
+    public function gameMap(Game $game, Map $map): Response
+    {
+
+        return $this->render(
+            'protocol/game_map.html.twig',
+            [
+                'game' => $game,
+                'map' => $map,
+            ]
+        );
     }
 }

@@ -44,7 +44,7 @@
                                             <div class="card-img-top img-responsive img-responsive-16by9" style="background-image: url('/maps/{{ map.id }}.png?{{ map.mapImageUpdated.timestamp }}')"></div>
                                             <div class="card-body">
                                                 <p class="overflow-auto">
-                                                    <a href="#" title="{{ map.name }}" class="no-loader" target="_blank"><i class="fas fa-external-link-alt p-1"></i>{{ map.name }}</a>
+                                                    <a href="{{ path('game_map', {'game': game.id, 'map': map.id}) }}" title="{{ map.name }}" class="no-loader" target="_blank"><i class="fas fa-external-link-alt p-1"></i>{{ map.name }}</a>
                                                 </p>
                                             </div>
                                         </div>
