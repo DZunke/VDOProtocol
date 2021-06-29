@@ -30,6 +30,16 @@ zusätzlichen Funktionalitäten vor.
 * Einfaches verschieben von Ordnergruppen mit automatischer Protkollierung
 * Übersetzung der Software in andere Sprachen
 
+## Verwendung als Docker-Environment
+
+Die Applikation unterstützt die Arbeit in einer Docker-Container-Umgebung. Diese Umgebung erfordert
+keinerlei PHP-Abhängigkeiten auf einem Host-System, so dass unabhängig vom Host die Applikation
+ausgeführt werden kann. 
+
+Dafür ist das Programm [Docker](https://www.docker.com/) ebenso wie [Docker Compose](https://docs.docker.com/compose/) 
+auf dem Host-System nötig. Die Applikation kann dann folgendermaßen ausgeführt und über die Adresse `http://localhost:8080` ausgeführt
+werden.
+
 ## Verwendung als Desktopapplikation (Windows)
 
 Für die Verwendung der Desktopversion ist ein Download des fertigen PHPDesktop-Paketes nötig. Die letzte
@@ -56,7 +66,7 @@ Eine Hilfe wie man einen Webserver für eine Symfony-Applikation einrichtet find
 
 Um das Projekt über den Sourcecode zu installieren sind folgende Schritte nötig:
 
-```shell script
+```bash
 # Installation aller PHP Abhängigkeiten
 composer install --optimize-autoloader --no-dev --prefer-dist --no-plugins --no-scripts --no-progress
 

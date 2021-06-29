@@ -5,15 +5,5 @@
         <h1>Spiel "{{ game.name }}" bearbeiten</h1>
     </div>
 
-    <div class="row row-cards">
-        <div class="col-12">
-            {{ form_start(form, {'attr': {'class': 'card'}}) }}
-            <div class="card-body">
-                {{ form_widget(form) }}
-                <button type="submit" class="btn btn-primary" data-check-form="game">Speichern</button>
-                <a href="{{ path('dashboard') }}" class="btn btn-secondary">Abbrechen</a>
-            </div>
-            {{ form_end(form) }}
-        </div>
-    </div>
+    {% include 'game/_form.html.twig' %}
 {% endblock %}
