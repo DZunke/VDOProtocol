@@ -1,10 +1,10 @@
+name: Build PHPDesktop Archive
+
 on:
     push:
         branches:
             - master
             - v1.x
-
-name: Build
 
 jobs:
     phpdesktop:
