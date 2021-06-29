@@ -35,9 +35,7 @@ export default class extends Controller {
         if (removeElement !== null) {
             removeElement.remove();
             document.getElementById('protocol-add-child-reset').remove();
-            document.querySelectorAll('.protocol-add-child-highlite').forEach((elem) => {
-                elem.classList.remove('protocol-add-child-highlite');
-            });
+            document.querySelectorAll('.protocol-add-highlite').forEach(el => el.remove());
         }
 
         document.querySelectorAll('input, textarea').forEach((elem) => {
@@ -70,6 +68,11 @@ export default class extends Controller {
         let $highliteClass = $element.dataset.highlite;
         let $idFormElement = document.getElementById('protocol_parent');
 
+        let $highliteElement = document.createElement('div');
+        $highliteElement.classList.add('protocol-add-highlite');
+        $highliteElement.classList.add('card-status-start');
+        $highliteElement.classList.add('bg-purple');
+
         if ($id === undefined) {
             return;
         }
@@ -77,20 +80,22 @@ export default class extends Controller {
         $idFormElement.value = $id;
 
         if ($highliteClass !== undefined && $highliteClass !== '') {
-            $element.closest('.' + $highliteClass).classList.add('protocol-add-child-highlite');
+            let $cardElement = $element.closest('.' + $highliteClass);
+            $cardElement.insertBefore($highliteElement, $cardElement.firstChild);
         }
 
         let formAppendingModeInfo = document.createElement('p');
         formAppendingModeInfo.id = 'protocol-add-child-info';
         formAppendingModeInfo.setAttribute('data-append', $id);
-        formAppendingModeInfo.className = 'text-center';
+        formAppendingModeInfo.className = 'text-center mt-3';
         formAppendingModeInfo.innerHTML = '<strong>Anfügenmodus</strong>';
+
         $idFormElement.parentElement.prepend(formAppendingModeInfo);
 
         let formAppendingCancelButton = document.createElement('button');
         formAppendingCancelButton.id = 'protocol-add-child-reset';
         formAppendingCancelButton.type = 'button';
-        formAppendingCancelButton.className = 'btn btn-block btn-secondary';
+        formAppendingCancelButton.className = 'btn btn-link';
         formAppendingCancelButton.tabIndex = 4;
         formAppendingCancelButton.innerText = 'Abbrechen';
 
@@ -99,7 +104,11 @@ export default class extends Controller {
             this.reset();
         });
 
-        $idFormElement.parentElement.append(formAppendingCancelButton);
+        let $formButtonElement = document.getElementsByClassName('protocol-form-buttons');
+        if ($formButtonElement.length > 0) {
+            $formButtonElement = $formButtonElement[0];
+            $formButtonElement.insertBefore(formAppendingCancelButton, $formButtonElement.firstChild);
+        }
 
         this.focusguard();
     }

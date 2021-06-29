@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block page_layout %}container-fluid{% endblock %}
+
+{% block content %}
+ {% set map_settings = map.settings %}
+ <div class="row row-cards" data-controller="maps" data-maps-maps-field="canvas-tools" data-maps-form-input="map_map">
+    <div class="col-12">
+        <canvas id="canvas-tools" height="1000" width="1000"></canvas>
+        <input type="hidden" id="map_map" value="{{ map.map }}" />
+    </div>
+    <!-- <div class="col-4">
+        <div class="row">
+            {% for sector in map_settings.sectors %}
+                <div class="col-12 mb-3">
+                    <div class="card" data-sector-id="{{ sector.id }}">
+                        {% if sector.name|length == 0 %}<div class="card-status-start bg-danger"></div>{% endif %}
+                        <div class="card-body">
+                            <h3 class="card-title">{{ sector.name|default('Kein Name') }}</h3>
+                            <p>{{ sector.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="empty">
+                            <p class="empty-title">Keine Bereiche</p>
+                            <p class="empty-subtitle text-muted">
+                                Auf der Standortkarte wurden keine Bereiche eingezeichnet.
+                            </p>
+                            <div class="empty-action">
+                                <a href="{{ path('maps_view', {'id': map.id}) }}"  title="Die Standortkarte {{ map.name }} ansehen und bearbeiten" class="btn btn-primary"><i class="dropdown-icon fas fa-edit"></i>&nbsp;Ansehen & Bearbeiten</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>-->
+ </div>
+{% endblock%}

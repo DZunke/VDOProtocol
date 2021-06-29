@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Übersicht der angelegten Standortkarten</h3>
+                    <div class="card-options">
+                        <a href="{{ path('maps_new') }}" class="btn btn-success btn-sm" title="Neue Standortkarte"><i class="fas fa-plus"></i>&nbsp;Neue Standortkarte</a>
+                    </div>
+                </div>
+                        <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                            <thead>
+                            <tr>
+                                <th style="width: 50px;"></th>
+                                <th>Spiel</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for map in maps %}
+                                <tr>
+                                    <td><span class="avatar me-2" style="--tblr-avatar-size: 5.5rem; background-image: url('/maps/{{ map.id }}.png?{{ map.mapImageUpdated.timestamp }}')"></span></td>
+                                    <td>{{ map.name }}</td>
+                                    <td class="text-end">
+                                        <a href="{{ path('maps_view', {'id': map.id}) }}"  title="Die Standortkarte {{ map.name }} ansehen und bearbeiten" class="btn btn-primary btn-sm"><i class="dropdown-icon fas fa-edit"></i>&nbsp;Ansehen & Bearbeiten</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="3">Keine Standortkarten gefunden</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--
+
+    <div class="row" data-controller="maps" data-maps-maps-field="canvas-tools">
+        <div class="col-12">
+            <button id="poly" title="Draw Polygon">Draw Polygon</button>
+            <button id="serialize" title="Serialisiere">Serialisiere</button>
+            <input type="file" id="bg_image" />
+
+            <pre id="content"></pre>
+            <canvas id="canvas-tools" class="canvas" width="800" height="600" style="border: 1px solid black;"></canvas>
+            <span id="canvas-tooltip" class="toolTip" style="
+  position: absolute;
+  z-index: 1;
+  background: rgb(119, 128, 0);
+  height: 30px;
+  width: 120px;
+  padding: 8px;
+  font-size: 13px;
+  color: #fff;
+  visibility: hidden;
+">ToolTip</span>
+
+        </div>
+    </div>
+
+    -->
+
+{% endblock %}
