@@ -22,17 +22,11 @@ class Game
      * @ORM\Id()
      * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="NONE")
-     *
-     * @var string
      */
-    private $id;
+    private string $id;
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    private $name = '';
+    /** @ORM\Column(type="string") */
+    private string $name = '';
 
     /**
      * @ORM\OneToMany(
@@ -45,21 +39,13 @@ class Game
      *
      * @var Collection<int,Protocol>
      */
-    private $protocol;
+    private Collection $protocol;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     *
-     * @var DateTimeImmutable
-     */
-    private $createdAt;
+    /** @ORM\Column(type="datetime_immutable") */
+    private DateTimeImmutable $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     *
-     * @var DateTimeImmutable|null
-     */
-    private $closedAt;
+    /** @ORM\Column(type="datetime_immutable", nullable=true) */
+    private ?DateTimeImmutable $closedAt = null;
 
     public function __construct()
     {

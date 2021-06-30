@@ -15,8 +15,7 @@ use function assert;
 
 final class FormContext extends BaseContext implements Context
 {
-    /** @var MinkContext */
-    private $minkContext;
+    private MinkContext $minkContext;
 
     /**
      * @BeforeScenario

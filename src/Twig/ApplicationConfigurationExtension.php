@@ -10,8 +10,7 @@ use Twig\Extension\GlobalsInterface;
 
 final class ApplicationConfigurationExtension extends AbstractExtension implements GlobalsInterface
 {
-    /** @var ApplicationConfiguration */
-    private $applicationConfiguration;
+    private ApplicationConfiguration $applicationConfiguration;
 
     public function __construct(ApplicationConfiguration $applicationConfiguration)
     {

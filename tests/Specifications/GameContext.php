@@ -19,15 +19,12 @@ use function assert;
 
 final class GameContext extends BaseContext implements Context
 {
-    /** @var EntityManagerInterface */
-    private $em;
-    /** @var RouterInterface */
-    private $router;
-    /** @var MinkContext */
-    private $minkContext;
+    private EntityManagerInterface $em;
+    private RouterInterface $router;
+    private MinkContext $minkContext;
 
     /** @var Game[] */
-    private $games = [];
+    private array $games = [];
 
     public function __construct(EntityManagerInterface $em, RouterInterface $router)
     {

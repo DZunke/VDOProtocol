@@ -15,12 +15,9 @@ use function assert;
 
 final class ProtocolContext extends BaseContext implements Context
 {
-    /** @var RouterInterface */
-    private $router;
-    /** @var MinkContext */
-    private $minkContext;
-    /** @var GameContext */
-    private $gameContext;
+    private RouterInterface $router;
+    private MinkContext $minkContext;
+    private GameContext $gameContext;
 
     public function __construct(RouterInterface $router)
     {

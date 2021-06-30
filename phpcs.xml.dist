@@ -9,8 +9,4 @@
     <file>tests</file>
 
     <rule ref="Doctrine"/>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-        <exclude-pattern>*</exclude-pattern>
-    </rule>
 </ruleset>

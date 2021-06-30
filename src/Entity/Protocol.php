@@ -20,60 +20,36 @@ class Protocol
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="guid")
-     *
-     * @var string
      */
-    private $id;
+    private string $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Game", inversedBy="protocol", fetch="EXTRA_LAZY")
-     *
-     * @var Game
-     */
-    private $game;
+    /** @ORM\ManyToOne(targetEntity="App\Entity\Game", inversedBy="protocol", fetch="EXTRA_LAZY") */
+    private Game $game;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Protocol", inversedBy="children")
      * @ORM\JoinColumn(nullable=true)
-     *
-     * @var Protocol|null
      */
-    private $parent;
+    private ?Protocol $parent;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Protocol", mappedBy="parent", orphanRemoval=true, cascade={"ALL"})
      *
      * @var Collection<int,Protocol>
      */
-    private $children;
+    private Collection $children;
 
-    /**
-     * @ORM\Column(type="text")
-     *
-     * @var string
-     */
-    private $content = '';
+    /** @ORM\Column(type="text") */
+    private string $content = '';
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    private $sender = '';
+    /** @ORM\Column(type="string") */
+    private string $sender = '';
 
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    private $recipent = '';
+    /** @ORM\Column(type="string") */
+    private string $recipent = '';
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     *
-     * @var DateTimeInterface
-     */
-    private $createdAt;
+    /** @ORM\Column(type="datetime_immutable") */
+    private DateTimeInterface $createdAt;
 
     public function __construct()
     {

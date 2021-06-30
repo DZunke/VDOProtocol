@@ -17,8 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class ProtocolType extends AbstractType
 {
-    /** @var EntityManagerInterface */
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $entityManager)
     {

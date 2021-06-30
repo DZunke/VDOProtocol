@@ -16,14 +16,10 @@ use function json_decode;
 
 class ApplicationConfiguration
 {
-    /** @var string */
-    private $title;
-    /** @var string */
-    private $footerImage;
-    /** @var string */
-    private $footerImageTitle;
-    /** @var string */
-    private $favIcon;
+    private string $title;
+    private string $footerImage;
+    private string $footerImageTitle;
+    private string $favIcon;
 
     /**
      * @param string[] $phpdesktopConfigs
