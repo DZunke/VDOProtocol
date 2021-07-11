@@ -7,7 +7,7 @@ namespace VDOLog\Core\Application\Protocol;
 use Assert\Assertion;
 use VDOLog\Core\Domain\Protocol;
 
-final class AddProtocol
+class AddProtocol
 {
     private string $gameId;
     private string $content;
